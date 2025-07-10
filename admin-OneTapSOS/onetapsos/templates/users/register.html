@@ -1,2 +1,45 @@
-<h2>Register</h2>
-<p>This is a placeholder.</p>
+{% extends "base.html" %}
+{% block title %}Register | OneTapSOS{% endblock %}
+
+{% block content %}
+<div style="max-width:500px; margin:60px auto; background:#fff; padding:40px 30px; border-radius:4px;">
+    <h1 style="margin-bottom:30px;">Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1;">
+                <label>First Name:</label>
+                {{ form.first_name }}
+            </div>
+            <div style="flex:1;">
+                <label>Last Name:</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <div>
+            <label>Email:</label>
+            {{ form.email }}
+        </div>
+        <div>
+            <label>Phone Number:</label>
+            {{ form.phone_number }}
+        </div>
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1;">
+                <label>Password:</label>
+                {{ form.password }}
+            </div>
+            <div style="flex:1;">
+                <label>Confirm Password:</label>
+                {{ form.confirm_password }}
+            </div>
+        </div>
+        <button type="submit" style="width:100%; margin-top:30px; padding:12px; background:#222; color:#fff; border:none; font-size:1.1em;">Register</button>
+    </form>
+    {% if form.errors %}
+        <div style="color:red; margin-top:10px;">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
