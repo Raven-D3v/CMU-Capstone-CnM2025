@@ -52,6 +52,11 @@ def classify_emergency(text):
     # Use new level-based keyword scoring
     match_scores = keyword_boost_levels(text)
 
+    # DEBUG INFO
+    print(f"[DEBUG] Prediction Probabilities: {dict(zip(model.classes_, prediction_proba))}")
+    print(f"[DEBUG] Keyword Match Scores: {match_scores}")
+    print(f"[DEBUG] Initial Prediction: {predicted_label} ({confidence}%)")
+
     if match_scores:
         # Get top-scoring keyword label
         top_keyword_label = max(match_scores, key=match_scores.get)
@@ -59,10 +64,10 @@ def classify_emergency(text):
 
         # Boost confidence if top keyword matches model prediction
         if top_keyword_label == predicted_label:
-            confidence = min(confidence + top_keyword_score * 3, 100.0)
+            confidence = min(confidence + top_keyword_score * 5, 100.0)
         else:
             alt_index = list(model.classes_).index(top_keyword_label)
-            alt_conf = prediction_proba[alt_index] * 100 + top_keyword_score * 3
+            alt_conf = prediction_proba[alt_index] * 100 + top_keyword_score * 5
             if alt_conf > confidence:
                 predicted_label = top_keyword_label
                 confidence = round(min(alt_conf, 100.0), 2)
@@ -71,7 +76,8 @@ def classify_emergency(text):
 
 # Optional test run
 if __name__ == "__main__":
-    test_text = "Ninakawan ako ng wallet"
+    test_text = "Naholdap ako"
     label, confidence = classify_emergency(test_text)
     print(f"Test: {test_text}")
     print(f"Prediction: {label} ({confidence}%)")
+    
