@@ -6,7 +6,7 @@ import joblib
 import os
 
 def train_model():
-    with open(os.path.join(os.path.dirname(__file__), "SOS-Ai-TrainingData.json")) as f:
+    with open(os.path.join(os.path.dirname(__file__), "SOS-Ai-TrainingData.json"), encoding='utf-8') as f:
         data = json.load(f)
 
     texts = [item["text"] for item in data]
