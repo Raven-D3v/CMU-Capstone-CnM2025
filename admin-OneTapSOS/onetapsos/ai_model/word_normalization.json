@@ -23,5 +23,45 @@
   "rob": ["robbing", "robbed", "robber", "robbers", "robbery", "robberies", "robberman", "robbingman", "robbish", "robbable"],
   "mug": ["mugged", "mugging", "muggers", "mugman", "muggsy", "muggins", "muggered", "muglike", "mugboy", "mugg"],
   "took": ["taken", "taking", "take", "takes", "takeaway", "taker", "takings", "taked", "takeout", "taketh"],
-  "stole": ["stolen", "steal", "stealing", "stealer", "stealers", "stealingly", "stealeth", "stoles", "stealman", "stealy"]
+  "stole": ["stolen", "steal", "stealing", "stealer", "stealers", "stealingly", "stealeth", "stoles", "stealman", "stealy"],
+
+
+
+
+
+  "saksak": ["sinaksak", "nasaksak", "susaksak", "saksakin", "saksakan", "saksakin", "saksakero", "saksakhan", "sumaksak", "saksakado"],
+  "patay": ["pinatay", "pumatay", "papatay", "namatay", "mapatay", "napatay", "patayan", "patayin", "nakapatay", "ipapatay", "patayhin"],
+  "suntok": ["sinuntok", "nasuntok", "susuntok", "suntukan", "sumuntok", "nanuntok", "pinuntok", "suntokero", "suntokhan", "masuntok"],
+  "bugbog": ["binugbog", "nambugbog", "bugbugin", "bugbogan", "bugbogero", "bugboghin", "nagbugbog", "bugbugan", "bugboghan", "makabugbog"],
+  "sipa": ["sinipa", "nasipa", "sisipa", "sisipain", "sipaero", "sipain", "sumipa", "sipahin", "nakasipa", "sipahan"],
+  "baril": ["binaril", "nabaril", "babarel", "barilin", "barilero", "mabaril", "pabaril", "ipabaril", "binabaril", "barilista"],
+  "palo": ["pinalo", "pinapalo", "pumalo", "papaluin", "pinaluin", "napalo", "mapapalo", "pinalo ako", "pinalo niya", "pinapalu"],
+  "sakmal": ["sinakmal", "nasakmal", "sasakmal", "sakmalin", "sakmalero", "sumakmal", "nakasakmal", "ipinasakmal", "sakmalhin", "sakmalhan"],
+  "pukpok": ["pinukpok", "napukpok", "pupukpok", "pupukpokin", "pukpokin", "sumukpok", "mapukpok", "ipukpok", "pukpokhan", "pukpokero"],
+  "away": ["nakipagaway", "nag-away", "aaway", "inaaway", "inaawayan", "kaaway", "makipagaway", "pinag-away", "inaaway ako", "inaaway niya"],
+  "sakal": ["sinakal", "nasakal", "sasakal", "sakalero", "sumakal", "nakasakal", "sinakalin", "ipinasakal", "sinakal niya", "sinakal ako"],
+  "hampas": ["hinampas", "nahampas", "hahampas", "hampasin", "hampasan", "sumampas", "nakahampas", "pinahampas", "hampashan", "hampasero"],
+  "kalmot": ["kinalmot", "nakalmot", "kakalmutin", "kinakamot", "kalmutin", "mangalmot", "sumakalmot", "pinakalmot", "nakalmutan", "kalmutero"],
+  "tadyak": ["tinadyakan", "natadyakan", "tatadyakan", "tadyakin", "tadyakero", "sumipa", "tinatadyakan", "pinatadyak", "mapatadyak", "tadyakhan"],
+  "dugo": ["dumugo", "nadugo", "madugo", "dinugo", "duguan", "dinudugo", "madudugo", "madugoan", "pagdugo", "padugo"],
+  "stab": ["stabbed", "stabbing", "stabs", "unstab", "stabber", "stabbin", "stabbedme", "stabwork", "stabbedhard", "stabshot"],
+  "punch": ["punched", "punches", "punching", "unpunch", "repunched", "puncher", "punchin", "pinunch", "punchman", "punchline"],
+  "kick": ["kicked", "kicking", "kicks", "kickin", "kickback", "re-kick", "kickman", "kickwork", "kickfight", "kickshot"],
+  "shoot": ["shot", "shooting", "shooter", "shoots", "shooted", "gunshot", "shootwork", "re-shoot", "shootfight", "shootman"],
+  "gun": ["guns", "gunned", "gunman", "gunshot", "gunner", "gunning", "gunwork", "gunfight", "gunfire", "gunplay"],
+  "hit": ["hitting", "hits", "hitman", "re-hit", "prehit", "hitwork", "hitline", "hitback", "unhit", "hitfight"],
+  "hurt": ["hurting", "hurts", "hurted", "unhurt", "rehurt", "hurtin", "hurtwork", "hurtline", "hurtshot", "hurtman"],
+  "attack": ["attacks", "attacked", "attacking", "re-attack", "attacker", "attackman", "attackwork", "pre-attack", "attackshot", "attackline"],
+  "beaten": ["beat", "beating", "beats", "unbeaten", "rebeat", "beatenup", "beatwork", "beatshot", "beatline", "beatman"],
+  "slap": ["slapped", "slapping", "slaps", "slapper", "slapman", "slapwork", "re-slap", "pre-slap", "slapshot", "slapline"],
+  "struck": ["strike", "strikes", "striking", "striker", "struckman", "re-strike", "pre-strike", "struckwork", "struckshot", "struckline"],
+  "assault": ["assaults", "assaulted", "assaulting", "assaulter", "re-assault", "assaultman", "pre-assault", "assaultwork", "assaultline", "assaultshot"],
+  "wound": ["wounds", "wounded", "wounding", "unwounded", "rewound", "woundman", "woundline", "woundwork", "woundshot", "woundfight"],
+  "bleed": ["bleeding", "bleeds", "bled", "re-bleed", "pre-bleed", "bleedout", "bleedline", "bleedshot", "bleedman", "bleedwork"],
+  "injure": ["injured", "injuring", "injures", "uninjured", "re-injure", "injury", "injureman", "injureline", "injurework", "injureshot"],
+  "brawl": ["brawls", "brawled", "brawling", "re-brawl", "pre-brawl", "brawler", "brawlman", "brawlwork", "brawlshot", "brawlfight"],
+  "fight": ["fights", "fighting", "fought", "re-fight", "pre-fight", "fighter", "fightman", "fightwork", "fightshot", "fightline"],
+  "choke": ["choked", "choking", "chokes", "choker", "re-choke", "pre-choke", "chokeman", "chokework", "chokeline", "chokeshot"],
+  "abuse": ["abuses", "abused", "abusing", "abuser", "re-abuse", "pre-abuse", "abuseman", "abusework", "abuseline", "abuseshot"]
+
 }

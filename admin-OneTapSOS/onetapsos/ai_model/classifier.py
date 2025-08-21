@@ -128,6 +128,7 @@ def classify_emergency(text):
         return "others", 0.0
 
     # Step 3: Model prediction
+    print(f"[DEBUG] Text passed to model: '{weighted_text}'")
     prediction_proba = model.predict_proba([weighted_text])[0]
     predicted_label = model.classes_[prediction_proba.argmax()]
     confidence = round(prediction_proba.max() * 100, 2)
