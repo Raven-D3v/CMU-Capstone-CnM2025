@@ -1,7 +1,30 @@
 {
-    "robbery": [      
-         "wallet 2"
+    "robbery": [
+        "holdup 3",
+        "nakaw 3",
+        "kawatan 3",
+        "snatch 3",
+        "tangay 3",
+        "kuha 2",
+        "nawala 2", 
 
+        "wallet 2",
+        "pitaka 2",
+        "bag 2",
+        "cellphone 2",
+        "phone 2",
+        "telepono 2",
+        "pera 2",
+        "money 2",
+        "cash 2",
+        "gamit 1",
+
+        "thief 3",
+        "thieves 3",
+        "rob 3",
+        "mug 2",
+        "took 3",
+        "stole 3"
     ],
     "assault": [
         "hitting 2",

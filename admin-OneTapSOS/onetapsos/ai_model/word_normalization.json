@@ -1,10 +1,27 @@
 {
-    "patay": ["pinatay", "pumatay", "papatayin", "nangpapatay"],
-    "saksak": ["nasaksak", "sinaksak", "saksakin", "susaksakin"],
-    "bugbog": ["binugbog", "bugbugin", "nambubugbog"],
-    "suntok": ["sinuntok", "susuntukin", "nanuntok"],
-    "sipa": ["sinipa", "sisipain", "sinisipa", "sinasipa"],
-    "holdap": ["holdapin", "hinoldap", "hinoldapan", "nangholdap"],
-    "nakaw": ["nanakawan", "ninakawan", "magnanakaw"],
-    "manyak": ["minanyak", "hinipuan", "nanghipo"]
+  "holdap": ["naholdap", "hinoldap", "holdaper", "holdupper", "holdapin", "hinoldapan", "nangholdap", "naholdup", "holdup", "holdapped"],
+  "nakaw": ["nanakaw", "nagnakaw", "ninakaw", "ninanakawan", "magnanakaw", "nakawan", "kinuha", "kinuhaang", "kinuhaan", "nakawin", "nakakuha", "nakakuhaan"],
+  "kawatan": ["kawatan", "kawatanin", "mangkawatan", "nakawatan", "kawatanan", "kawatahan", "kawating", "magnanakaw", "kawatas", "kawatingan"],
+  "snatch": ["snatcher", "snatched", "snatching", "snatchin", "snatchers", "snatchy", "snatchan", "snatchinang", "snatchman", "snatchboy"],
+  "tangay": ["tinangay", "tinatangay", "natangay", "tumatangay", "tinatangayan", "matatangay", "itangay", "tinatangayan", "itangay", "natatangay"],
+  "kuha": ["kinuha", "kumukuha", "kumuha", "kinukuha", "nakakuha", "kuhaon", "kuhain", "nakukuha", "kuhaing", "magkuha", "pagkuha"],
+  "nawala": ["nawalan", "nawawala", "nawalaan", "nawalang", "nawalay", "mawawala", "nawalayin", "nawalaon", "nawalangin", "nawawalang"],
+
+  "wallet": ["wallets", "wallett", "walet", "wallete", "wallety", "walleted", "walletting", "walleto", "walleter", "walletin", "waller"],
+  "pitaka": ["pitakan", "pitakang", "pitakain", "pitakawan", "pitakado", "pitakas", "pitakado", "pitakarin", "pitakahin", "pitakaya"],
+  "bag": ["bags", "bagged", "bagger", "bagging", "baguette", "bagyo", "bagin", "bagan", "bagahe", "baggage"],
+  "cellphone": ["cell phone", "cell phones", "cellphones", "selpon", "cp", "cellfon", "cellfonz", "cellfone", "selponz", "cellular", "celpon", "celpone"],
+  "phone": ["phones", "fon", "fone", "fons", "phonex", "phoney", "phoned", "phoning", "phonetic", "phoner"],
+  "telepono": ["teleponong", "teleponan", "teleponado", "teleponero", "teleponista", "teleponado", "tetelepono", "natelepono", "teleponohan", "teleponoyin"],
+  "pera": ["perahan", "perahin", "perado", "perahin", "perarin", "peraryo", "peras", "perang", "perante", "perahin"],
+  "money": ["monies", "moneys", "moneyed", "moneying", "moneyman", "moneyless", "moneywise", "moneybag", "moneybags", "moneyboy"],
+  "cash": ["cashes", "cashed", "cashing", "casher", "cashee", "cashless", "cashman", "cashboy", "cashbag", "cashflow"],
+  "gamit": ["gamitin", "ginamit", "gamiton", "gamitang", "magamit", "nagagamit", "gamitinpa", "ginagamit", "gamitonpa", "gamitonmo"],
+
+  "thief": ["thieves", "thievery", "thieving", "thiefer", "thiefed", "thiefful", "thieflike", "thiefy", "thiefling", "thiefman"],
+  "thieves": ["thieveses", "thievish", "thievy", "thieving", "thievesly", "thievesman", "thieveslike", "thievesful", "thievesed", "thieveser"],
+  "rob": ["robbing", "robbed", "robber", "robbers", "robbery", "robberies", "robberman", "robbingman", "robbish", "robbable"],
+  "mug": ["mugged", "mugging", "muggers", "mugman", "muggsy", "muggins", "muggered", "muglike", "mugboy", "mugg"],
+  "took": ["taken", "taking", "take", "takes", "takeaway", "taker", "takings", "taked", "takeout", "taketh"],
+  "stole": ["stolen", "steal", "stealing", "stealer", "stealers", "stealingly", "stealeth", "stoles", "stealman", "stealy"]
 }
