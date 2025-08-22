@@ -9504,6 +9504,30 @@
     "label": "Others"
   },
   {
+    "text": "My house is burning",
+    "label": "Others"
+  },
+  {
+    "text": "My house burn",
+    "label": "Others"
+  },
+  {
+    "text": "My house is burn",
+    "label": "Others"
+  },
+  {
+    "text": "Fire in my house",
+    "label": "Others"
+  },
+  {
+    "text": "House on fire",
+    "label": "Others"
+  },
+  {
+    "text": "Help! My house is on fire!",
+    "label": "Others"
+  },
+  {
     "text": "Help! sila are robbing me!",
     "label": "robbery"
   },
