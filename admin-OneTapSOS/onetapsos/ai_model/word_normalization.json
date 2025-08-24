@@ -38,7 +38,7 @@
   "palo": ["pinalo", "pinapalo", "pumalo", "papaluin", "pinaluin", "napalo", "mapapalo", "pinalo ako", "pinalo niya", "pinapalu"],
   "sakmal": ["sinakmal", "nasakmal", "sasakmal", "sakmalin", "sakmalero", "sumakmal", "nakasakmal", "ipinasakmal", "sakmalhin", "sakmalhan"],
   "pukpok": ["pinukpok", "napukpok", "pupukpok", "pupukpokin", "pukpokin", "sumukpok", "mapukpok", "ipukpok", "pukpokhan", "pukpokero"],
-  "away": ["nakipagaway", "nag-away", "aaway", "inaaway", "inaawayan", "kaaway", "makipagaway", "pinag-away", "inaaway ako", "inaaway niya"],
+  "away1": ["nakipagaway", "nag-away", "aaway", "inaaway", "inaawayan", "kaaway", "makipagaway", "pinag-away", "inaaway ako", "inaaway niya"],
   "sakal": ["sinakal", "nasakal", "sasakal", "sakalero", "sumakal", "nakasakal", "sinakalin", "ipinasakal", "sinakal niya", "sinakal ako"],
   "hampas": ["hinampas", "nahampas", "hahampas", "hampasin", "hampasan", "sumampas", "nakahampas", "pinahampas", "hampashan", "hampasero"],
   "kalmot": ["kinalmot", "nakalmot", "kakalmutin", "kinakamot", "kalmutin", "mangalmot", "sumakalmot", "pinakalmot", "nakalmutan", "kalmutero"],
@@ -109,7 +109,7 @@
 
 
     "sunog": [
-        "nasunog", "masunog", "sunugan", "sinunog", "asunog", "kasunog", "sunogin", "sunugan", "sunoger", "pasunog"
+        "nasunog", "masunog", "sunugan", "sinunog", "asunog", "kasunog", "sunogin", "sunugan", "sunoger", "pasunog", "sunog!", "sunogg!", "sunogg", "sunoggg", "sunoggg!", "sunog!!!"
     ],
     "burn": ["burned", "burning", "burns", "burner", "reburn", "unburn", "burnout", "burnman", "burnwork", "burnline"],
     "baha": [
@@ -205,6 +205,8 @@
     "usok": [
         "umusok", "nagusok", "inusok", "usoker", "umousok", "nag-uusok", "usoklog", "usokero", "usokin", "usokhan"
     ],
+    "help": ["helped", "helping", "helper", "helps", "unhelp", "prehelp", "rehelp", "helpline", "helpdesk", "helpmate", "help!", "helppppp", "helpp", "helpp!"],
+    "tulong": ["tulungan", "tulunganin", "tulongin", "tulongan", "tulonghin", "tulongay", "tulonglog", "tulonger", "tulongista", "tulong!", "tulongg!", "tulongg", "tulonggg", "tulonggg!"],
     "bumbero":["fireman", "firemen", "firefighter", "firefighters", "firefighting", "firefought", "firefoughts", "firefoughten", "firefoughtly", "firefough", "bumbero", "bumberos", "bumberer", "bumberers", "bumbering", "bumbered", "bumberly", "bumberman", "bumbermen", "bumberwoman", "bumberwomen"],
     "ambulance":["ambulances", "ambulanced", "ambulancing", "ambulancer", "ambulancey", "ambulanceful", "ambulanceman", "ambulancemen", "ambulancewoman", "ambulancewomen", "ambulansya", "ambulansyas", "ambulansyado", "ambulansyahin", "ambulansyahan", "ambulansyero", "ambulansyista", "ambulansyahin", "ambulansyadoy"],
     "rescue":["rescues", "rescued", "rescuing", "rescuer", "rescuers", "rescueful", "rescueless", "rescueman", "rescuemen", "rescuewoman", "rescuewomen"],

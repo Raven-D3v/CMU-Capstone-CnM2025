@@ -122,10 +122,21 @@ def classify_emergency(text):
     # Step 2: Apply word weights
     weighted_text = apply_word_weights(normalized_text)
 
-    # SAFETY CHECK: too short → classify as "others"
-    if len(weighted_text.split()) < 2:
-        print(f"[DEBUG] Too few meaningful tokens → classified as 'others'")
-        return "others", 0.0
+    # SAFETY CHECK: Hybrid rule
+    tokens = weighted_text.split()
+
+    if len(tokens) < 2:
+        # Check if single token is a strong keyword
+        single_token = tokens[0] if tokens else ""
+        strong_keywords = {kw.split()[0] for kws in keyword_dict.values() for kw in kws if kw.endswith("3")}
+        # Example: holdap, saksak, aksidente, etc.
+
+        if single_token in strong_keywords:
+            print(f"[DEBUG] Single strong keyword detected ('{single_token}') → allow classification")
+        else:
+            print(f"[DEBUG] Too few tokens and not a strong keyword → classified as 'others'")
+            return "others", 0.0
+
 
     # Step 3: Model prediction
     print(f"[DEBUG] Text passed to model: '{weighted_text}'")
