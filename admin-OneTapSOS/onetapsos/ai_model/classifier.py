@@ -160,14 +160,22 @@ def classify_emergency(text):
         top_keyword_label = max(match_scores, key=match_scores.get)
         top_keyword_score = match_scores[top_keyword_label]
 
-        if top_keyword_label == predicted_label:
-            confidence = min(confidence + top_keyword_score * 7, 100.0)
+        # RULE: If strong keywords appear, override TF-IDF
+        if top_keyword_score >= 3:  
+            # Force override if strong keyword(s) detected
+            predicted_label = top_keyword_label
+            confidence = 100.0
+            print(f"[DEBUG] OVERRIDE: Strong keyword(s) matched → Forcing '{predicted_label}' (100%)")
         else:
-            alt_index = list(model.classes_).index(top_keyword_label)
-            alt_conf = prediction_proba[alt_index] * 100 + top_keyword_score * 7
-            if alt_conf > confidence:
-                predicted_label = top_keyword_label
-                confidence = round(min(alt_conf, 100.0), 2)
+            # Otherwise, apply boosting (same as before)
+            if top_keyword_label == predicted_label:
+                confidence = min(confidence + top_keyword_score * 10, 100.0)
+            else:
+                alt_index = list(model.classes_).index(top_keyword_label)
+                alt_conf = prediction_proba[alt_index] * 100 + top_keyword_score * 10
+                if alt_conf > confidence:
+                    predicted_label = top_keyword_label
+                    confidence = round(min(alt_conf, 100.0), 2)
 
     return predicted_label, confidence
 
