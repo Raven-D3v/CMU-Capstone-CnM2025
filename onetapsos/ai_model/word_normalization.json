@@ -1,0 +1,214 @@
+{
+  "holdap": ["naholdap", "hinoldap", "holdaper", "holdupper", "holdapin", "hinoldapan", "nangholdap", "naholdup", "holdup", "holdapped"],
+  "nakaw": ["nanakaw", "nagnakaw", "ninakaw", "ninakawan", "nanakawan", "ninanakawan", "magnanakaw", "nakawan", "kinuha", "kinuhaang", "kinuhaan", "nakawin", "nakakuha", "nakakuhaan"],
+  "kawatan": ["kawatan", "kawatanin", "mangkawatan", "nakawatan", "kawatanan", "kawatahan", "kawating", "magnanakaw", "kawatas", "kawatingan"],
+  "snatch": ["snatcher", "snatched", "snatching", "snatchin", "snatchers", "snatchy", "snatchan", "snatchinang", "snatchman", "snatchboy"],
+  "tangay": ["tinangay", "tinatangay", "natangay", "tumatangay", "tinatangayan", "matatangay", "itangay", "tinatangayan", "itangay", "natatangay"],
+  "kuha": ["kinuha", "kumukuha", "kumuha", "kinukuha", "nakakuha", "kuhaon", "kuhain", "nakukuha", "kuhaing", "magkuha", "pagkuha"],
+  "nawala": ["nawalan", "nawawala", "nawalaan", "nawalang", "nawalay", "mawawala", "nawalayin", "nawalaon", "nawalangin", "nawawalang"],
+
+  "wallet": ["wallets", "wallett", "walet", "wallete", "wallety", "walleted", "walletting", "walleto", "walleter", "walletin", "waller"],
+  "pitaka": ["pitakan", "pitakang", "pitakain", "pitakawan", "pitakado", "pitakas", "pitakado", "pitakarin", "pitakahin", "pitakaya"],
+  "bag": ["bags", "bagged", "bagger", "bagging", "baguette", "bagyo", "bagin", "bagan", "bagahe", "baggage"],
+  "cellphone": ["cell phone", "cell phones", "cellphones", "selpon", "cp", "cellfon", "cellfonz", "cellfone", "selponz", "cellular", "celpon", "celpone"],
+  "phone": ["phones", "fon", "fone", "fons", "phonex", "phoney", "phoned", "phoning", "phonetic", "phoner"],
+  "telepono": ["teleponong", "teleponan", "teleponado", "teleponero", "teleponista", "teleponado", "tetelepono", "natelepono", "teleponohan", "teleponoyin"],
+  "pera": ["perahan", "perahin", "perado", "perahin", "perarin", "peraryo", "peras", "perang", "perante", "perahin"],
+  "money": ["monies", "moneys", "moneyed", "moneying", "moneyman", "moneyless", "moneywise", "moneybag", "moneybags", "moneyboy"],
+  "cash": ["cashes", "cashed", "cashing", "casher", "cashee", "cashless", "cashman", "cashboy", "cashbag", "cashflow"],
+  "gamit": ["gamitin", "ginamit", "gamiton", "gamitang", "magamit", "nagagamit", "gamitinpa", "ginagamit", "gamitonpa", "gamitonmo"],
+
+  "thief": ["thieves", "thievery", "thieving", "thiefer", "thiefed", "thiefful", "thieflike", "thiefy", "thiefling", "thiefman"],
+  "thieves": ["thieveses", "thievish", "thievy", "thieving", "thievesly", "thievesman", "thieveslike", "thievesful", "thievesed", "thieveser"],
+  "rob": ["robbing", "robbed", "robber", "robbers", "robbery", "robberies", "robberman", "robbingman", "robbish", "robbable"],
+  "mug": ["mugged", "mugging", "muggers", "mugman", "muggsy", "muggins", "muggered", "muglike", "mugboy", "mugg"],
+  "took": ["taken", "taking", "take", "takes", "takeaway", "taker", "takings", "taked", "takeout", "taketh"],
+  "stole": ["stolen", "steal", "stealing", "stealer", "stealers", "stealingly", "stealeth", "stoles", "stealman", "stealy"],
+
+
+
+
+
+  "saksak": ["sinaksak", "nasaksak", "susaksak", "saksakin", "saksakan", "saksakin", "saksakero", "saksakhan", "sumaksak", "saksakado"],
+  "patay": ["pinatay", "pumatay", "papatay", "namatay", "mapatay", "napatay", "patayan", "patayin", "nakapatay", "ipapatay", "patayhin"],
+  "suntok": ["sinuntok", "nasuntok", "susuntok", "suntukan", "sumuntok", "nanuntok", "pinuntok", "suntokero", "suntokhan", "masuntok"],
+  "bugbog": ["binugbog", "nambugbog", "bugbugin", "bugbogan", "bugbogero", "bugboghin", "nagbugbog", "bugbugan", "bugboghan", "makabugbog"],
+  "sipa": ["sinipa", "nasipa", "sisipa", "sisipain", "sipaero", "sipain", "sumipa", "sipahin", "nakasipa", "sipahan"],
+  "baril": ["binaril", "nabaril", "babarel", "barilin", "barilero", "mabaril", "pabaril", "ipabaril", "binabaril", "barilista"],
+  "palo": ["pinalo", "pinapalo", "pumalo", "papaluin", "pinaluin", "napalo", "mapapalo", "pinalo ako", "pinalo niya", "pinapalu"],
+  "sakmal": ["sinakmal", "nasakmal", "sasakmal", "sakmalin", "sakmalero", "sumakmal", "nakasakmal", "ipinasakmal", "sakmalhin", "sakmalhan"],
+  "pukpok": ["pinukpok", "napukpok", "pupukpok", "pupukpokin", "pukpokin", "sumukpok", "mapukpok", "ipukpok", "pukpokhan", "pukpokero"],
+  "away1": ["nakipagaway", "nag-away", "aaway", "inaaway", "inaawayan", "kaaway", "makipagaway", "pinag-away", "inaaway ako", "inaaway niya"],
+  "sakal": ["sinakal", "nasakal", "sasakal", "sakalero", "sumakal", "nakasakal", "sinakalin", "ipinasakal", "sinakal niya", "sinakal ako"],
+  "hampas": ["hinampas", "nahampas", "hahampas", "hampasin", "hampasan", "sumampas", "nakahampas", "pinahampas", "hampashan", "hampasero"],
+  "kalmot": ["kinalmot", "nakalmot", "kakalmutin", "kinakamot", "kalmutin", "mangalmot", "sumakalmot", "pinakalmot", "nakalmutan", "kalmutero"],
+  "tadyak": ["tinadyakan", "natadyakan", "tatadyakan", "tadyakin", "tadyakero", "sumipa", "tinatadyakan", "pinatadyak", "mapatadyak", "tadyakhan"],
+  "dugo": ["dumugo", "nadugo", "madugo", "dinugo", "duguan", "dinudugo", "madudugo", "madugoan", "pagdugo", "padugo"],
+  "stab": ["stabbed", "stabbing", "stabs", "unstab", "stabber", "stabbin", "stabbedme", "stabwork", "stabbedhard", "stabshot"],
+  "punch": ["punched", "punches", "punching", "unpunch", "repunched", "puncher", "punchin", "pinunch", "punchman", "punchline"],
+  "kick": ["kicked", "kicking", "kicks", "kickin", "kickback", "re-kick", "kickman", "kickwork", "kickfight", "kickshot"],
+  "shoot": ["shot", "shooting", "shooter", "shoots", "shooted", "gunshot", "shootwork", "re-shoot", "shootfight", "shootman"],
+  "gun": ["guns", "gunned", "gunman", "gunshot", "gunner", "gunning", "gunwork", "gunfight", "gunfire", "gunplay"],
+  "hit": ["hitting", "hits", "hitman", "re-hit", "prehit", "hitwork", "hitline", "hitback", "unhit", "hitfight"],
+  "hurt": ["hurting", "hurts", "hurted", "unhurt", "rehurt", "hurtin", "hurtwork", "hurtline", "hurtshot", "hurtman"],
+  "attack": ["attacks", "attacked", "attacking", "re-attack", "attacker", "attackman", "attackwork", "pre-attack", "attackshot", "attackline"],
+  "beaten": ["beat", "beating", "beats", "unbeaten", "rebeat", "beatenup", "beatwork", "beatshot", "beatline", "beatman"],
+  "slap": ["slapped", "slapping", "slaps", "slapper", "slapman", "slapwork", "re-slap", "pre-slap", "slapshot", "slapline"],
+  "struck": ["strike", "strikes", "striking", "striker", "struckman", "re-strike", "pre-strike", "struckwork", "struckshot", "struckline"],
+  "assault": ["assaults", "assaulted", "assaulting", "assaulter", "re-assault", "assaultman", "pre-assault", "assaultwork", "assaultline", "assaultshot"],
+  "wound": ["wounds", "wounded", "wounding", "unwounded", "rewound", "woundman", "woundline", "woundwork", "woundshot", "woundfight"],
+  "bleed": ["bleeding", "bleeds", "bled", "re-bleed", "pre-bleed", "bleedout", "bleedline", "bleedshot", "bleedman", "bleedwork"],
+  "injure": ["injured", "injuring", "injures", "uninjured", "re-injure", "injury", "injureman", "injureline", "injurework", "injureshot"],
+  "brawl": ["brawls", "brawled", "brawling", "re-brawl", "pre-brawl", "brawler", "brawlman", "brawlwork", "brawlshot", "brawlfight"],
+  "fight": ["fights", "fighting", "fought", "re-fight", "pre-fight", "fighter", "fightman", "fightwork", "fightshot", "fightline"],
+  "choke": ["choked", "choking", "chokes", "choker", "re-choke", "pre-choke", "chokeman", "chokework", "chokeline", "chokeshot"],
+  "abuse": ["abuses", "abused", "abusing", "abuser", "re-abuse", "pre-abuse", "abuseman", "abusework", "abuseline", "abuseshot"],
+
+
+
+
+  "hipo": ["hinipo", "nanghipo", "hipuan", "nahipo", "hihipo", "hipoer", "hipohin", "hipot", "hipona", "hipoy"],
+  "yakap": ["niyakap", "yayakap", "yakapin", "nakayakap", "yuyakap", "yakaper", "yakapan", "yakapero", "yakapul", "yakapay"],
+  "halik": ["hinalikan", "halikan", "halikero", "humalik", "nahalik", "makahalik", "kissing", "kissed", "halikanin", "halikay"],
+  "pisil": ["pinisil", "pisilin", "pumipisil", "pipisil", "napisil", "pisiler", "pisilero", "pisilyo", "pisilay", "pisilul"],
+  "baywang": ["baywangin", "baywangan", "baywangero", "nababaywang", "maybaywang", "baywanginero", "baywanger", "baywangon", "baywangay", "baywanglin"],
+  "dibdib": ["dede", "dedehin", "didede", "dedero", "dedebs", "dedeboy", "dibdiban", "dibdiber", "dibdibo", "dibdibon"],
+  "suso": ["susu", "osus", "soso", "osos"],
+  "puwet": ["puwetan", "puwetanin", "puwetaner", "pinuwetan", "puwetero", "puweto", "puwetanay", "puwets", "puwetter", "puwetboy"],
+  "harass": ["harasser", "harassed", "harassing", "harassment", "harassor", "harasss", "harassd", "harassr", "harassz", "harassx"],
+  "bastos": ["binastos", "babastos", "bastusin", "mambabastos", "nabastos", "bastosin", "bastoser", "bastosero", "bastosa", "bastosz"],
+  "kantot": ["kinantot", "kantotan", "kantoter", "kantoteros", "kantots", "nakantot", "kantotin", "kantotero", "kantotay", "kantotz"],
+  "manyak": ["minanyak", "manyaker", "manyaks", "manyakis", "manyaka", "manyakis", "manyakero", "manyako", "manyakz", "manyakul"],
+  "sipol": ["sumipol", "sisipol", "sipoler", "sipolero", "sipolz", "sinipol", "sipolay", "sipolul", "sipolerz", "sipols"],
+  "rape": ["raped", "rapist", "raping", "rapez", "raper", "rapes", "r4pe", "rapin", "rapistz", "rapex", "narape", "nirape", "irerape"],
+  "molest": ["molested", "molesting", "molester", "molestz", "molestd", "molestx", "molesto", "molests", "molestt", "molestero"],
+  "grope": ["groped", "groping", "groper", "gropes", "gropez", "gropingz", "groperz", "gropin", "gropinor", "gropist"],
+  "catcall": ["catcalls", "catcalled", "catcalling", "catcaller", "catcallz", "catcallr", "katkol", "katkoler", "katkolz", "catcallx"],
+  "expose": ["exposed", "exposing", "exposer", "exposes", "expoz", "xpose", "xp0se", "exposd", "exposx", "exp0se"],
+  "kiss": ["kissed", "kisser", "kisses", "kissing", "kiszer", "kiszz", "kiz", "kisx", "kissr", "kiszo"],
+  "hug": ["hugged", "hugging", "hugs", "hugger", "hugz", "hugx", "huggin", "huggz", "hugly", "huglyz"],
+  "butt": ["butts", "butted", "butting", "buttz", "buttox", "butto", "buttan", "butterz", "buttman", "buttoy"],
+  "jakol": ["nagjakol", "jakolan", "jakoler", "jakolero", "jakolz", "jakolin", "jakuls", "jakulyo", "jakolay", "jakolp"],
+  "hubad": ["hubaran", "hubader", "hubadero", "nahubad", "hubadz", "hubadul", "hubadulz", "hubadnin", "hubado", "hubadzx"],
+  "libog": ["malibog", "kalibogan", "libogz", "liboger", "libogon", "libogl", "libogs", "libogero", "libogay", "libogx"],
+  "record": ["recorded", "recording", "recorder", "records", "recordz", "recordx", "rec0rd", "rekord", "rekords", "rekorder"],
+  "panty": ["panties", "pantyhin", "pantyero", "pantyz", "pantyx", "pantir", "pantiez", "pantih", "pantay", "pantire"],
+  "ari": ["ariin", "arin", "arian", "arianz", "ariz", "arix", "arihan", "ariul", "ariyo", "ariny"],
+  "puri": ["pinuri", "purihin", "puring", "purier", "puriin", "puriul", "puriz", "purix", "purina", "puriyo"],
+  "dignidad": ["dignidaz", "dignidado", "dignidader", "dignidadz", "dignidadoz", "dignidaderz", "dignidadzx", "dignidadero", "dignidaderul", "digniday"],
+  "kepyas": ["kepyasz", "kepyasul", "kepyasay", "kepyasx", "kepyasd", "kepyasl", "kepyasn", "kepyasulz", "kepyasr", "kepyasb"],
+  "pekpek": ["pekpeks", "pekpeker", "pekpekin", "pekpekz", "pekpeko", "pekpekay", "pekpeknin", "pekpeksz", "pekpekd", "pekpeku"],
+  "puke": ["pukez", "puker", "puking", "pukezx", "pukex", "pukerz", "pukin", "puks", "pukly", "pukoy"],
+  "vagina": ["vaginas", "vaginer", "vaginaz", "vaginax", "vaginae", "vaginor", "vaginal", "vaginul", "vaginly", "vagino"],
+  "pussy": ["pussies", "pussyz", "pussix", "pussey", "pusie", "pussyr", "pussin", "pussor", "pussee", "pussyo"],
+  "titi": ["tite", "etits", "etit", "tites", "testes"],
+  "penis": ["penises", "peniz", "penix", "penisr", "peniso", "penisly", "penisn", "penisero", "penisay", "penisul", "sinep"],
+
+
+
+
+
+    "sunog": [
+        "nasunog", "masunog", "sunugan", "sinunog", "asunog", "kasunog", "sunogin", "sunugan", "sunoger", "pasunog", "sunog!", "sunogg!", "sunogg", "sunoggg", "sunoggg!", "sunog!!!"
+    ],
+    "burn": ["burned", "burning", "burns", "burner", "reburn", "unburn", "burnout", "burnman", "burnwork", "burnline"],
+    "baha": [
+        "binaha", "bahain", "babahain", "kabaha", "nabaha", "bahaan", "pabaha", "bahado", "bahadoy", "bahahin"
+    ],
+    "lindol": [
+        "lumindol", "nilindol", "malindol", "linlindol", "kalindol", "palindol", "naglinol", "lindolan", "linindol", "ilindol"
+    ],
+    "aksidente": [
+        "naaksidente", "maaksidente", "aksidentado", "aksidenteng", "aksidentahin", "aksidenta", "aksidentar", "inaksidente", "aksidenty", "aksidenter"
+    ],
+    "nahimatay": [
+        "hinimatay", "mahihimatay", "nahihimatay", "himatay", "nahimatayan", "himatayin", "himatayen", "nahimatays", "himatayer", "himatayero"
+    ],
+    "lunod": [
+        "nalunod", "malunod", "lumulunod", "lunurin", "kalunod", "nilunod", "palunod", "lunoder", "lunodan", "ilunod"
+    ],
+    "collapse": [
+        "collapsed", "collapsing", "collapser", "collapsen", "collapsered", "collapsering", "recollapse", "overcollapse", "undercollapse", "collapseration"
+    ],
+
+    "droga": [
+        "nadroga", "madroga", "dinroga", "drogaran", "droger", "idroga", "padruga", "drogin", "drogista", "drogal"
+    ],
+    "shabu": [
+        "nashabu", "shabuhan", "shabuhin", "shabuser", "shaboy", "shabuan", "pashabu", "isnashabu", "nagshabu", "shabero"
+    ],
+    "drug": [
+        "drugs", "drugged", "drugging", "drugger", "druggy", "undrug", "predrug", "antidrug", "redrug", "drugman"
+    ],
+    "bisyo": [
+        "mabisyo", "nabibisyo", "kabibisyo", "bisyoso", "bisyuhin", "bisyuhan", "pabisyo", "bisyoid", "bisyolog", "nabibisyado"
+    ],
+    "alak": [
+        "inalak", "mahalak", "alakan", "nalak", "palak", "alakero", "alakista", "alaker", "alakanin", "alakee"
+    ],
+    "inom": [
+        "uminom", "iinom", "pinainom", "nag-inom", "mag-inom", "inomer", "inomero", "ininom", "inomers", "inomeroid"
+    ],
+    "illegal": [
+        "illegals", "illegalize", "illegalized", "illegalizing", "illegality", "illegalist", "illegalism", "reillegal", "preillegal", "illegalin"
+    ],
+    "pustahan": [
+        "pumusta", "pustado", "pustahanin", "nakapusta", "magpusta", "pinustahan", "pustero", "pustahin", "pustahaner", "pustalog"
+    ],
+    "sugal": [
+        "nagsugal", "sugalin", "magsusugal", "pagsusugal", "sugalan", "sugaler", "sugalinan", "pinagsugal", "isugal", "kasugal"
+    ],
+    "gambling": [
+        "gambled", "gambler", "gamblers", "gamblingly", "outgamble", "overgamble", "pregamble", "regamble", "ungamble", "misgamble"
+    ],
+
+    "ingay": [
+        "maingay", "nang-ingay", "ingayan", "ingayer", "umigawingay", "ingayen", "nag-ingay", "pakaingay", "pag-ingay", "ingayog"
+    ],
+    "sigaw": [
+        "sumigaw", "sigawan", "magsisigaw", "pasigaw", "sigawen", "pinagsigaw", "sisigaw", "nakasigaw", "isigaw", "sigawlog"
+    ],
+    "away": [
+        "nakipagaway", "nag-aaway", "aawayin", "inaway", "mag-aaway", "pag-aaway", "kaaway", "inaaway", "awaylog", "awayero"
+    ],
+    "disturb": [
+        "disturbed", "disturbing", "disturber", "disturbers", "disturbance", "disturbingly", "undisturb", "predisturb", "redisturb", "misdisturb"
+    ],
+    "istorbo": [
+        "nang-istorbo", "iniistorbo", "naistorbo", "istorbohin", "mang-istorbo", "istorbohan", "pakaistorbo", "istorbolog", "istorber", "istorbin"
+    ],
+    "nagwawala": [
+        "wawala", "nagwala", "nawawala", "magwawala", "nagwawalay", "wawalang", "nagwawalag", "nagwawalan", "nagwawaloy", "nagwawaler"
+    ],
+    "riot": [
+        "riots", "rioted", "rioter", "rioters", "rioting", "antiriot", "preriot", "unriot", "overriot", "misriot"
+    ],
+    "gulo": [
+        "magulo", "gumulo", "gulong", "guloid", "nagulo", "pinagulo", "guloan", "nagugulo", "guloers", "pagulo"
+    ],
+    "alboroto": [
+        "alborotado", "alboroter", "nag-alboroto", "inalboroto", "alborotahan", "alborotin", "alborotista", "alborotoid", "alboroteros", "pinalboroto"
+    ],
+
+    "bomba": [
+        "bombahan", "binomba", "bombahin", "bombaster", "bombahin", "magbomba", "pabomba", "bombalogs", "bombista", "ibomba"
+    ],
+    "armas": [
+        "armasan", "armaser", "inarma", "armasero", "mag-armas", "armasin", "armasinan", "armasista", "armaseroy", "armaslog"
+    ],
+    "granada": [
+        "granadaan", "grana", "granadista", "granader", "pgranada", "igranada", "nagranda", "granadahin", "granadahan", "granadize"
+    ],
+    "kontrabando": [
+        "kontrabandista", "kontrabander", "nakontrabando", "paskontrabando", "kontrabandohin", "kontrabandohan", "kontrabandalog", "inakontrabando", "magkontrabando", "kontrabandoy"
+    ],
+    "usok": [
+        "umusok", "nagusok", "inusok", "usoker", "umousok", "nag-uusok", "usoklog", "usokero", "usokin", "usokhan"
+    ],
+    "help": ["helped", "helping", "helper", "helps", "unhelp", "prehelp", "rehelp", "helpline", "helpdesk", "helpmate", "help!", "helppppp", "helpp", "helpp!"],
+    "tulong": ["tulungan", "tulunganin", "tulongin", "tulongan", "tulonghin", "tulongay", "tulonglog", "tulonger", "tulongista", "tulong!", "tulongg!", "tulongg", "tulonggg", "tulonggg!"],
+    "bumbero":["fireman", "firemen", "firefighter", "firefighters", "firefighting", "firefought", "firefoughts", "firefoughten", "firefoughtly", "firefough", "bumbero", "bumberos", "bumberer", "bumberers", "bumbering", "bumbered", "bumberly", "bumberman", "bumbermen", "bumberwoman", "bumberwomen"],
+    "ambulance":["ambulances", "ambulanced", "ambulancing", "ambulancer", "ambulancey", "ambulanceful", "ambulanceman", "ambulancemen", "ambulancewoman", "ambulancewomen", "ambulansya", "ambulansyas", "ambulansyado", "ambulansyahin", "ambulansyahan", "ambulansyero", "ambulansyista", "ambulansyahin", "ambulansyadoy"],
+    "rescue":["rescues", "rescued", "rescuing", "rescuer", "rescuers", "rescueful", "rescueless", "rescueman", "rescuemen", "rescuewoman", "rescuewomen"],
+    "medic":["medics", "mediced", "medicing", "medicer", "medicly", "medicful", "mediceless", "medicman", "medicmen", "medicwoman", "medicwomen", "mediko", "medik", "medikos"]
+}

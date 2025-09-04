@@ -1,59 +1,6 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Active Reports - OneTapSOS{% endblock %}
-
-{% block content %}
-<div class="p-6 space-y-6">
-    <div class="flex justify-between items-center">
-        <h2 class="text-2xl font-semibold text-gray-800 text-glow">ACTIVE REPORTS</h2>
-        <p class="text-gray-600"><strong>{% now "F j, Y, g:i A" %}</strong></p>
-    </div>
-
-    <!-- Filters -->
-    <div class="overflow-x-auto mb-6">
-        {% include "reports/partials/report_filters.html" with action_url=request.path show_status=False show_crime_category=True %}
-
-    </div>
-
-    <!-- Desktop Table -->
-    <div class="overflow-x-auto hidden md:block">
-        <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
-            {% include "reports/partials/report_table_head.html" %}
-            <tbody id="reportTableBody"><!-- JS fills rows --></tbody>
-        </table>
-    </div>
-
-
-    <!-- Mobile Card View -->
-    <div id="reportCardBody" class="grid gap-4 md:hidden">
-        <!-- JS fills cards -->
-    </div>
-
-    <!-- Footer Buttons -->
-    <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="{% url 'rejected_reports' %}" 
-           class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">
-           Rejected Reports
-        </a>
-        <a href="{% url 'unclassified_reports' %}" 
-           class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">
-           Unclassified Reports
-        </a>
-        <a href="{% url 'archived_reports' %}" 
-           class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">
-           Resolved Reports
-        </a>
-    </div>
-    
-<script>
-    window.PAGE_CONTEXT = {
-        show_resolved: false
-    };
-    window.REPORT_LIST_URL = "{% url 'report_list_json' %}";
-</script>
-<script src="{% static 'js/report_list.js' %}"></script>
-
-
-</div>
-{% endblock %}
+<h2>Reports List</h2>
+<ul>
+    {% for report in reports %}
+        <li><a href="{% url 'report_view' report.id %}">{{ report }}</a></li>
+    {% endfor %}
+</ul>
