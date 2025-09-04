@@ -14,7 +14,13 @@ class EmergencyReport(models.Model):
         )]
     )
     date_time_reported = models.DateTimeField(default=timezone.now)
+    
+    #location fields
     location = models.CharField(max_length=255)
+    
+    #coordinates field
+    coordinates = models.JSONField(null=True, blank=True)  # {"lat":14.66, "lng":120.96}
+    
     sender = models.ForeignKey(
         "callers.Caller",
         on_delete=models.CASCADE,
@@ -24,7 +30,7 @@ class EmergencyReport(models.Model):
 
     CRIME_CATEGORIES = [
         ('assault', 'Assault'),
-        ('sexual_assault', 'Sexual Assault'),
+        ('harassment', 'Harassment'),
         ('robbery', 'Robbery'),
         ('other', 'Other'),
     ]
@@ -108,17 +114,5 @@ class EmergencyReport(models.Model):
             return max(remaining.days, 0)
         return None
 
-    @classmethod
-    def delete_expired_reports(cls):
-        """
-        Deletes all rejected reports whose days_remaining == 0.
-        Uses the days_remaining property directly.
-        """
-        expired = []
-        for report in cls.objects.filter(status='rejected', date_time_rejected__isnull=False):
-            if report.days_remaining == 0:
-                expired.append(report)
-                report.delete()
-
-        return len(expired)
-
+    def __str__(self):
+        return f"Report {self.report_id} - {self.get_status_display()}"

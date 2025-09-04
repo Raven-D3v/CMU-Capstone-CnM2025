@@ -1,0 +1,23 @@
+<div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Latest Reports</h3>
+    <div id="latest-reports-content" class="space-y-3">
+        {% if latest_reports %}
+            {% for report in latest_reports %}
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                <div>
+                    <p class="font-medium text-gray-900">{{ report.report_id }}</p>
+                    <p class="text-sm text-gray-600">{{ report.location }}</p>
+                </div>
+                <span class="px-2 py-1 text-xs font-medium rounded-full 
+                    {% if report.status == 'active' %}bg-red-100 text-red-800
+                    {% elif report.status == 'resolved' %}bg-green-100 text-green-800
+                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ report.get_status_display }}
+                </span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-sm text-gray-600">No reports available.</p>
+        {% endif %}
+    </div>
+</div>

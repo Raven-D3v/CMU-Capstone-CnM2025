@@ -19,4 +19,13 @@ urlpatterns = [
     
     path('view/<str:report_id>/', views.report_view, name='report_view'),
     path('edit/<str:report_id>/', views.edit_report, name='edit_report'),
+    
+    # AJAX Dashboard data endpoints
+    path("reports-json/", views.report_list_json, name="report_list_json"),  
+    path("reports-stats-json/", views.reports_stats_json, name="reports_stats_json"),  
+    path("reports-map-json/", views.reports_map_json, name="reports_map_json"),
+    path("status-chart-json/", views.status_chart_json, name="status_chart_json"),
+    path('crime-categories-json/', views.crime_categories_json, name='crime_categories_json'),
+    path("reports-by-date-json/", views.reports_by_date_json, name="reports_by_date_json"),
+    path("reports-by-location-json/", views.reports_by_location_json, name="reports_by_location_json"),
 ]

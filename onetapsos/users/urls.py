@@ -1,4 +1,4 @@
-from django.urls import include, path
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path('view/<int:user_id>/', views.officer_view, name='officer_view'),
     path('callerslist/', views.callers_list, name='callers_list'),
     path('callersview/<int:caller_id>/', views.callers_view, name='callers_view'),
-    path("notifications/", include("notifications.urls")),
+    
     
 ]
 

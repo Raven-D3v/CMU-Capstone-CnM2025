@@ -1,0 +1,128 @@
+<!-- _crime_map.html -->
+
+<div class="bg-white p-6 rounded-2xl shadow-md my-6">
+  <h3 class="text-lg font-semibold mb-4">Crime Heatmap - Malabon City</h3>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap gap-4 mb-4">
+    <!-- Status Filter -->
+    <div>
+      <label for="statusFilter" class="text-sm font-medium">Status:</label>
+      <select id="statusFilter" class="border rounded p-1">
+        <option value="all">All</option>
+        <option value="reported">Reported</option>
+        <option value="resolved">Resolved</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+
+    <!-- Crime Category Filter -->
+    <div>
+      <label for="crimeFilter" class="text-sm font-medium">Crime Category:</label>
+      <select id="crimeFilter" class="border rounded p-1">
+        <option value="all">All</option>
+        <option value="assault">Assault</option>
+        <option value="harassment">Harassment</option>
+        <option value="robbery">Robbery</option>
+        <option value="others">Others</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="map" class="w-full h-96 rounded-lg border border-gray-200"></div>
+
+  <div class="mt-4 text-sm text-gray-600">
+    <p><strong>Legend:</strong> 🔴 High Crime Area | 🟡 Medium Crime Area | 🟢 Low Crime Area</p>
+    <p class="mt-1">Click on markers to view incident details. Heatmap shows crime density across Malabon City.</p>
+    <p class="mt-1"><strong>Data Period:</strong> Last {{ days_filter }} days | 
+      <strong>Total Incidents:</strong> <span id="totalIncidents">0</span></p>
+  </div>
+</div>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+<!--Spidifier Plugin for diffent reports in one Coordinates--->
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+<script>
+
+  var map, heatLayer, markersLayer;
+
+  function initMap() {
+    // Start map centered on Malabon
+    map = L.map("map").setView([14.6681, 120.9656], 13);
+
+    // Base tiles
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
+
+    // Heatmap + marker group
+    heatLayer = L.heatLayer([], { radius: 25, blur: 15 }).addTo(map);
+    markersLayer = L.markerClusterGroup({ spiderfyOnMaxZoom: true }).addTo(map);
+
+    // First fetch
+    refreshMap();
+
+    // Auto refresh every 15s
+    setInterval(refreshMap, 15000);
+  }
+
+  function refreshMap() {
+    // Read current filter selections
+    const status = document.getElementById("statusFilter").value;
+    const crime = document.getElementById("crimeFilter").value;
+
+    // Build URL with query params
+    const url = `{% url 'reports_map_json' %}?status=${status}&crime=${crime}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Filtered crime data:", data);
+        updateMap(data);
+      })
+      .catch(err => console.error("Error fetching crime data:", err));
+  }
+
+  function updateMap(crimeData) {
+    // Clear old points
+    markersLayer.clearLayers();
+    heatLayer.setLatLngs([]);
+
+    crimeData.forEach(c => {
+      if (!c.lat || !c.lng) return;
+
+      const latlng = [c.lat, c.lng];
+      heatLayer.addLatLng(latlng);
+
+      const marker = L.marker(latlng).bindPopup(`
+        <div class="text-sm">
+          <b>${c.type}</b><br>
+          <strong>Barangay:</strong> ${c.barangay || "Unknown"}<br>
+          <strong>Street:</strong> ${c.street || "Unknown"}<br>
+          <strong>Date:</strong> ${c.date}<br>
+          <strong>Status:</strong> ${c.status}
+        </div>
+      `);
+
+      markersLayer.addLayer(marker);
+    });
+
+    document.getElementById("totalIncidents").textContent = crimeData.length;
+  }
+
+  // Re-fetch immediately when filters change
+  document.addEventListener("DOMContentLoaded", () => {
+    initMap();
+
+    document.getElementById("statusFilter").addEventListener("change", refreshMap);
+    document.getElementById("crimeFilter").addEventListener("change", refreshMap);
+  });
+
+</script>

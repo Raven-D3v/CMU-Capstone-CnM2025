@@ -1,34 +1,129 @@
 {% extends "base.html" %}
-{% load static %}
+
 {% block title %}Rejected Reports - OneTapSOS{% endblock %}
 
 {% block content %}
 <div class="p-6 space-y-6">
 
     <!-- Page Header -->
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+    <div class="flex justify-between items-center">
         <h2 class="text-2xl font-semibold text-gray-800 text-glow">REJECTED REPORTS</h2>
         <p class="text-gray-600"><strong>{% now "F j, Y, g:i A" %}</strong></p>
     </div>
 
     <!-- Filters -->
-    <div class="overflow-x-auto mb-6">
-       {% include "reports/partials/report_filters.html" with action_url=request.path show_status=False show_crime_category=False %}
+    <div class="overflow-x-auto mb-6 filters">
+        <form method="get" action="{% url 'rejected_reports' %}" class="flex flex-col sm:flex-row sm:flex-wrap items-center gap-4 w-full min-w-max">
+            <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q|default:'' }}" 
+                   class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-64">
+            <select name="date_filter" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+                <option value="">Date</option>
+                {% for date in dates %}
+                    <option value="{{ date|date:'Y-m-d' }}" {% if request.GET.date_filter == date|date:'Y-m-d' %}selected{% endif %}>
+                        {{ date|date:"M. d, Y" }}
+                    </option>
+                {% endfor %}
+            </select>
+            <select name="location_filter" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+                <option value="">Location</option>
+                {% for loc in locations %}
+                    <option value="{{ loc }}" {% if request.GET.location_filter == loc %}selected{% endif %}>
+                        {{ loc }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="px-4 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow sm:w-auto">
+                Filter
+            </button>
+        </form>
     </div>
 
     <!-- Desktop Table -->
-    <div class="hidden md:block overflow-x-auto">
-        <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
-            {% include "reports/partials/report_table_head.html" with show_rejected=True %}
-            <tbody id="reportTableBody">
-                <!-- JS fills rows -->
+    <div class="overflow-x-auto hidden md:block">
+        <table class="w-full border-collapse bg-white shadow-md rounded-lg">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Report ID</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Date & Time Reported</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Location</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Crime Category</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Sender</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Status</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Rejected On</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Message</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Days Remaining</th>
+                    <th colspan="2" class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="rejectedTableBody">
+                {% for report in reports %}
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 border-b border-gray-300">{{ report.report_id }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.date_time_reported|date:"Y-m-d h:i A" }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.location }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.get_crime_category_display|default:"Unknown" }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.sender }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.get_status_display }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.date_time_rejected|default:"--"|date:"Y-m-d h:i A" }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.message|default:"--" }}</td>
+                    <td class="p-3 border-b border-gray-300">
+                        {% if report.days_remaining is not None %}
+                            {{ report.days_remaining }} day{{ report.days_remaining|pluralize }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td class="p-3 border-b border-gray-300 text-center">
+                        <a href="{% url 'report_view' report.report_id %}">
+                            <button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                        </a>
+                    </td>
+                    <td class="p-3 border-b border-gray-300 text-center">
+                                                 <a href="{% url 'edit_report' report.report_id %}">
+                            <button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow"
+                                    {% if report.status != 'active' %}disabled{% endif %}>EDIT</button>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="11" class="p-3 border-b border-gray-300 text-center">No rejected reports found.</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 
     <!-- Mobile Cards -->
-    <div id="reportCardBody" class="space-y-4 md:hidden">
-        <!-- JS fills cards -->
+    <div class="md:hidden grid gap-4" id="rejectedCardBody">
+        {% for report in reports %}
+        <div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+            <p><strong>ID:</strong> {{ report.report_id }}</p>
+            <p><strong>Date:</strong> {{ report.date_time_reported|date:"Y-m-d h:i A" }}</p>
+            <p><strong>Location:</strong> {{ report.location }}</p>
+            <p><strong>Category:</strong> {{ report.get_crime_category_display|default:"Unknown" }}</p>
+            <p><strong>Sender:</strong> {{ report.sender }}</p>
+            <p><strong>Status:</strong> {{ report.get_status_display }}</p>
+            <p><strong>Rejected On:</strong> {{ report.date_time_rejected|default:"--"|date:"Y-m-d h:i A" }}</p>
+            <p><strong>Message:</strong> {{ report.message|default:"--" }}</p>
+            <p><strong>Days Remaining:</strong> 
+                {% if report.days_remaining is not None %}
+                    {{ report.days_remaining }} day{{ report.days_remaining|pluralize }}
+                {% else %}--{% endif %}
+            </p>
+            <div class="mt-3 flex space-x-2">
+                <a href="{% url 'report_view' report.report_id %}" class="flex-1">
+                    <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                </a>
+                                 <a href="{% url 'edit_report' report.report_id %}" class="flex-1">
+                    <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow"
+                            {% if report.status != 'active' %}disabled{% endif %}>EDIT</button>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-500">No rejected reports found.</p>
+        {% endfor %}
     </div>
 
     <!-- Footer Buttons -->
@@ -40,11 +135,80 @@
 
 </div>
 
-<!-- Scripts -->
 <script>
-    window.REPORT_LIST_URL = "{% url 'rejected_reports_json' %}";
-    window.PAGE_CONTEXT = { show_rejected: true };
-</script>
-<script src="{% static 'js/report_list.js' %}"></script>
+function fetchRejectedReports() {
+    const q = document.querySelector('input[name="q"]').value;
+    const date_filter = document.querySelector('select[name="date_filter"]').value;
+    const location_filter = document.querySelector('select[name="location_filter"]').value;
 
+    const url = `{% url 'rejected_reports_json' %}?q=${encodeURIComponent(q)}&date_filter=${encodeURIComponent(date_filter)}&location_filter=${encodeURIComponent(location_filter)}`;
+
+    fetch(url, { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            const tableBody = document.getElementById('rejectedTableBody');
+            const cardBody = document.getElementById('rejectedCardBody');
+
+            tableBody.innerHTML = '';
+            cardBody.innerHTML = '';
+
+            if (!data.reports.length) {
+                tableBody.innerHTML = '<tr><td colspan="11" class="p-3 border-b text-center">No rejected reports found.</td></tr>';
+                cardBody.innerHTML = '<p class="text-center text-gray-500">No rejected reports found.</p>';
+                return;
+            }
+
+            data.reports.forEach(r => {
+                // Desktop table row
+                tableBody.innerHTML += `
+<tr class="hover:bg-gray-50">
+<td class="p-3 border-b border-gray-300">${r.report_id}</td>
+<td class="p-3 border-b border-gray-300">${r.date_time_reported}</td>
+<td class="p-3 border-b border-gray-300">${r.location}</td>
+<td class="p-3 border-b border-gray-300">${r.crime_category || 'Unknown'}</td>
+<td class="p-3 border-b border-gray-300">${r.sender}</td>
+<td class="p-3 border-b border-gray-300">${r.status}</td>
+<td class="p-3 border-b border-gray-300">${r.date_time_rejected || '--'}</td>
+<td class="p-3 border-b border-gray-300">${r.message || '--'}</td>
+<td class="p-3 border-b border-gray-300">${r.days_remaining !== null ? r.days_remaining + ' day' + (r.days_remaining !== 1 ? 's' : '') : '--'}</td>
+<td class="p-3 border-b border-gray-300 text-center">
+<a href="/reports/view/${r.report_id}/"><button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button></a>
+</td>
+<td class="p-3 border-b border-gray-300 text-center">
+<a href="/reports/edit/${r.report_id}/"><button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280]" ${r.status != 'active' ? 'disabled' : ''}>EDIT</button></a>
+</td>
+</tr>`;
+
+                // Mobile cards
+                cardBody.innerHTML += `
+<div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+<p><strong>ID:</strong> ${r.report_id}</p>
+<p><strong>Date:</strong> ${r.date_time_reported}</p>
+<p><strong>Location:</strong> ${r.location}</p>
+<p><strong>Category:</strong> ${r.crime_category || 'Unknown'}</p>
+<p><strong>Sender:</strong> ${r.sender}</p>
+<p><strong>Status:</strong> ${r.status}</p>
+<p><strong>Rejected On:</strong> ${r.date_time_rejected || '--'}</p>
+<p><strong>Message:</strong> ${r.message || '--'}</p>
+<p><strong>Days Remaining:</strong> ${r.days_remaining !== null ? r.days_remaining + ' day' + (r.days_remaining !== 1 ? 's' : '') : '--'}</p>
+<div class="mt-3 flex space-x-2">
+<a href="/reports/view/${r.report_id}/" class="flex-1"><button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button></a>
+<a href="/reports/edit/${r.report_id}/" class="flex-1"><button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280]" ${r.status != 'active' ? 'disabled' : ''}>EDIT</button></a>
+</div>
+</div>`;
+            });
+        })
+        .catch(err => console.error('Error fetching rejected reports:', err));
+}
+
+// Auto-refresh every 5 seconds
+setInterval(fetchRejectedReports, 5000);
+fetchRejectedReports();
+
+// Update on filter form submit
+document.querySelector('.filters form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetchRejectedReports();
+});
+</script>
 {% endblock %}

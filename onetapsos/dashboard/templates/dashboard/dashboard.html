@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | OneTapSOS{% endblock %}
+
+{% block content %}
+<div class="p-6 space-y-6">
+    {% include "dashboard/_header.html" %}
+    {% include "dashboard/_stats_cards.html" %}
+    {% include "dashboard/_crime_map.html" %}
+    {% include "dashboard/_charts.html" %}
+    {% include "dashboard/_latest_reports.html" %}
+    {% include "dashboard/_top_officers.html" %}
+    {% include "dashboard/_quick_actions.html" %}
+</div>
+
+<!-- 🔄 Centralized AJAX Refresh Scripts -->
+<script>
+    // Refresh Latest Reports
+    function refreshLatestReports() {
+        console.log("Refreshing Report List...");
+        fetch("{% url 'report_list_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                let container = document.getElementById("latest-reports-content");
+                if (container) {
+                    container.innerHTML = "";
+                    data.reports.forEach(report => {
+                        container.innerHTML += `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <div>
+                                    <p class="font-medium text-gray-900">${report.report_id}</p>
+                                    <p class="text-sm text-gray-600">${report.location}</p>
+                                </div>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full 
+                                    ${report.status === 'active' ? 'bg-red-100 text-red-800' :
+                                      report.status === 'resolved' ? 'bg-green-100 text-green-800' :
+                                      'bg-gray-100 text-gray-800'}">
+                                    ${report.status}
+                                </span>
+                            </div>`;
+                    });
+                }
+            });
+    }
+
+    // Refresh Stats
+    function refreshStats() {
+        console.log("Refreshing Report Stats...");
+        fetch("{% url 'reports_stats_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("total-reports").textContent = data.total_reports;
+                document.getElementById("active-reports").textContent = data.active_reports;
+                document.getElementById("unclassified-reports").textContent = data.unclassified_reports;
+                document.getElementById("resolved-reports").textContent = data.resolved_reports;
+                document.getElementById("rejected-reports").textContent = data.rejected_reports;
+            })
+            .catch(err => console.error("Error refreshing stats:", err));
+    }
+
+    // Refresh Map
+    function refreshMap() {
+        console.log("Refreshing Crime Map...");
+
+        fetch("{% url 'reports_map_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                console.log("New crime data:", data);
+                window.crimeData = data;
+
+                // Clear old data
+                markersLayer.clearLayers();
+                heatLayer.setLatLngs([]);
+
+                // Add updated data
+                window.crimeData.forEach(c => {
+                    if (!c.lat || !c.lng) return;
+
+                    const latlng = [c.lat, c.lng];
+                    heatLayer.addLatLng(latlng);
+
+                    const marker = L.marker(latlng).bindPopup(`
+                        <div class="text-sm">
+                        <b>${c.type}</b><br>
+                        <strong>Barangay:</strong> ${c.barangay || "Unknown"}<br>
+                        <strong>Street:</strong> ${c.street || "Unknown"}<br>
+                        <strong>Date:</strong> ${c.date}<br>
+                        <strong>Reports:</strong> ${c.count}<br>
+                        <strong>Status:</strong> ${c.status}
+                        </div>
+                    `);
+
+                    markersLayer.addLayer(marker);
+                });
+
+                // Update count
+                document.getElementById("totalIncidents").textContent = window.crimeData.length;
+            })
+            .catch(err => console.error("Error refreshing map:", err));
+    }
+
+    // Run every 10 seconds
+    setInterval(() => {
+        refreshLatestReports();
+        refreshStats();
+        refreshMap();
+    }, 15000);
+
+    // Run once on load
+    refreshLatestReports();
+    refreshStats();
+    refreshMap();
+</script>
+
+{% endblock %}
+  

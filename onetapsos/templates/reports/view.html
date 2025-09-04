@@ -56,15 +56,15 @@
   <!-- Buttons -->
   <div class="flex justify-center gap-4 mt-6">
     {% if report.status == "active" or report.status == "rejected" or report.status == "resolved" %}
-      <a href="{% url 'edit_report' report.report_id %}" class="px-5 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition">EDIT</a>
+             <a href="{% url 'edit_report' report.report_id %}" class="px-5 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition">EDIT</a>
     {% endif %}
 
     {% if report.status == "rejected" %}
-      <a href="{% url 'rejected_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Rejected Reports</a>
-    {% elif report.status == "resolved" %}
-      <a href="{% url 'archived_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Archived Reports</a>
-    {% else %}
-      <a href="{% url 'report_list' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Active Reports</a>
+             <a href="{% url 'rejected_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Rejected Reports</a>
+     {% elif report.status == "resolved" %}
+       <a href="{% url 'archived_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Archived Reports</a>
+     {% else %}
+       <a href="{% url 'report_list' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Active Reports</a>
     {% endif %}
   </div>
 

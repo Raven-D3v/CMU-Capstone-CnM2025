@@ -1,15 +1,16 @@
 from datetime import timezone
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q, Func
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_datetime
 from .models import EmergencyReport
 from users.models import UserProfile
 from django.http import JsonResponse
+from django.db.models import Count
+from django.db.models.functions import TruncDate
 from django.contrib import messages
 from datetime import timedelta
-
-
+from collections import defaultdict
 
 
 # ---------------- Helper Functions ---------------- #
@@ -42,7 +43,7 @@ def report_list_json(request):
     if q:
         reports = reports.filter(
             Q(location__icontains=q) |
-            Q(sender__full_name__icontains=q)|
+            Q(sender__icontains=q) |
             Q(message__icontains=q)
         )
 
@@ -50,10 +51,10 @@ def report_list_json(request):
         reports = reports.filter(date_time_reported__date=date_filter)
 
     if location_filter:
-        reports = reports.filter(location__icontains=location_filter)
+        reports = reports.filter(location=location_filter)
 
     if crime_filter:
-        reports = reports.filter(crime_category__icontains=crime_filter)
+        reports = reports.filter(crime_category=crime_filter)
 
     # --- Build JSON data ---
     data = []
@@ -93,7 +94,7 @@ def archived_reports_json(request):
         reports = reports.filter(
             Q(report_id__icontains=query) |
             Q(location__icontains=query) |
-            Q(sender__full_name__icontains=query)|
+            Q(sender__icontains=query) |
             Q(message__icontains=query)
         )
 
@@ -151,7 +152,7 @@ def rejected_reports_json(request):
         reports = reports.filter(
             Q(report_id__icontains=q) |
             Q(location__icontains=q) |
-            Q(sender__full_name__icontains=q)|
+            Q(sender__icontains=q) |
             Q(message__icontains=q)
         )
     if date_filter:
@@ -187,7 +188,7 @@ def unclassified_reports_json(request):
         reports = reports.filter(
             Q(report_id__icontains=q) |
             Q(location__icontains=q) |
-            Q(sender__full_name__icontains=q)|
+            Q(sender__icontains=q) |
             Q(message__icontains=q)
         )
     if date_filter:
@@ -207,6 +208,171 @@ def unclassified_reports_json(request):
         })
     return JsonResponse({'reports': data})
 
+
+
+# ---------  Ajax for Dashboard Heat Map   ------------ #
+@login_required
+def report_json(request):   # new endpoint
+    reports = EmergencyReport.objects.order_by("-date_time_reported")[:50]
+    data = [
+        {
+            "id": r.id,
+            "type": r.crime_category,
+            "date": r.date_time_reported.strftime("%Y-%m-%d %H:%M:%S"),
+            "location": r.location,
+            "lat": r.coordinates.get("lat") if r.coordinates else None,
+            "lng": r.coordinates.get("lng") if r.coordinates else None,
+        }
+        for r in reports
+    ]
+    return JsonResponse(data, safe=False)
+
+
+# Stats Card
+def reports_stats_json(request):
+    total_reports = EmergencyReport.objects.count()
+    active_reports = EmergencyReport.objects.filter(status="active").count()
+    unclassified_reports = EmergencyReport.objects.filter(status="unclassified").count()
+    resolved_reports = EmergencyReport.objects.filter(status="resolved").count()
+    rejected_reports = EmergencyReport.objects.filter(status="rejected").count()
+
+    data = {
+        "total_reports": total_reports,
+        "active_reports": active_reports,
+        "unclassified_reports": unclassified_reports,
+        "resolved_reports": resolved_reports,
+        "rejected_reports": rejected_reports,
+    }
+    return JsonResponse(data)
+
+
+# Heatmap
+@login_required
+@login_required
+def reports_map_json(request):
+    # Get filter parameters from query string
+    status_filter = request.GET.get("status", "all")
+    crime_filter = request.GET.get("crime", "all")
+
+    # Start with reports that have coordinates
+    reports = EmergencyReport.objects.exclude(coordinates=None)
+
+    # Apply filters if not 'all'
+    if status_filter != "all":
+        reports = reports.filter(status__iexact=status_filter)
+
+    if crime_filter != "all":
+        reports = reports.filter(crime_category__iexact=crime_filter)
+
+    crime_data = []
+    for r in reports:
+        lat = r.coordinates.get("lat") if r.coordinates else None
+        lng = r.coordinates.get("lng") if r.coordinates else None
+        if not lat or not lng:
+            continue
+
+        location_parts = r.location.split(",")
+        street = location_parts[0].strip() if len(location_parts) > 0 else ""
+        barangay = location_parts[1].strip() if len(location_parts) > 1 else ""
+
+        crime_data.append({
+            "lat": lat,
+            "lng": lng,
+            "type": r.crime_category,
+            "barangay": barangay,
+            "street": street,
+            "date": r.date_time_reported.strftime("%Y-%m-%d %I:%M %p"),
+            "count": 1,  # each report is separate
+            "status": r.status,
+        })
+
+    return JsonResponse(crime_data, safe=False)
+
+
+# Status Chart
+@login_required
+def status_chart_json(request):
+    db_to_label = {
+        'active': 'Active',
+        'resolved': 'Resolved',
+        'unclassified': 'Unclassified',
+        'rejected': 'Rejected'
+    }
+    status_order = ['Active', 'Resolved', 'Unclassified', 'Rejected']
+    status_data = {label: 0 for label in status_order}
+
+    status_counts = EmergencyReport.objects.values('status').annotate(count=Count('id'))
+    for entry in status_counts:
+        label = db_to_label.get(entry['status'])
+        if label:
+            status_data[label] = entry['count']
+
+    return JsonResponse({
+        'labels': status_order,
+        'values': [status_data[label] for label in status_order]
+    })
+
+
+# Crime Categories Chart
+@login_required
+def crime_categories_json(request):
+    # Aggregate crime counts
+    crime_counts = (
+        EmergencyReport.objects
+        .values('crime_category')
+        .annotate(count=Count('id'))
+        .order_by('crime_category')
+    )
+
+    # Return JSON
+    data = {
+        "labels": [item['crime_category'] or "Unclassified" for item in crime_counts],
+        "values": [item['count'] for item in crime_counts]
+    }
+    return JsonResponse(data)
+
+
+# Date Line Graph
+@login_required
+def reports_by_date_json(request):
+    reports_by_date = (
+        EmergencyReport.objects
+        .annotate(date=TruncDate('date_time_reported'))
+        .values('date')
+        .annotate(count=Count('id'))
+        .order_by('date')
+    )
+
+    data = {
+        "labels": [r['date'].strftime("%Y-%m-%d") for r in reports_by_date],
+        "values": [r['count'] for r in reports_by_date]
+    }
+
+    return JsonResponse(data)
+
+
+
+# Top 5 Barangay Bar Chart
+@login_required
+def reports_by_location_json(request):
+    # Aggregate reports per barangay
+    reports_by_barangay = (
+        EmergencyReport.objects
+        .values('location')  # Or parse into barangay if stored separately
+        .annotate(count=Count('id'))
+        .order_by('-count')[:5]  # Top 5
+    )
+
+    # If location parsing needed
+    # For example, if 'Barangay X, Street Y' stored in `location`
+    def get_barangay(loc):
+        return loc.split(',')[1].strip() if ',' in loc else loc
+
+    labels = [get_barangay(r['location']) for r in reports_by_barangay]
+    values = [r['count'] for r in reports_by_barangay]
+
+    return JsonResponse({"labels": labels, "values": values})
+
 # ---------------- Views ---------------- #
 @login_required
 def report_list(request):
@@ -222,7 +388,7 @@ def report_list(request):
 
     if query:
         reports = reports.filter(
-            Q(location__icontains=query) | Q(sender__full_name__icontains=query)| Q(message__icontains=query)
+            Q(location__icontains=query) | Q(sender__icontains=query) | Q(message__icontains=query)
         )
 
     if date_filter:
@@ -238,13 +404,7 @@ def report_list(request):
         reports = reports.filter(status=status_filter)
 
     # ✅ Distinct values for dropdowns
-    locations = (
-    EmergencyReport.objects
-    .annotate(location_clean=Func('location', function='TRIM'))  # remove leading/trailing spaces
-    .values_list('location_clean', flat=True)
-    .distinct()
-    .order_by('location_clean')
-)
+    locations = EmergencyReport.objects.values_list("location", flat=True).distinct()
     crime_categories = EmergencyReport.CRIME_CATEGORIES  # <-- All defined choices
     statuses = EmergencyReport.STATUS_CHOICES            # <-- All defined choices
     dates = EmergencyReport.objects.dates("date_time_reported", "day").distinct()
@@ -281,7 +441,7 @@ def archived_reports(request):
         reports = reports.filter(
             Q(report_id__icontains=query) |
             Q(location__icontains=query) |
-            Q(sender__full_name__icontains=query)|
+            Q(sender__icontains=query) |
             Q(message__icontains=query)
         )
 
@@ -311,18 +471,11 @@ def archived_reports(request):
         reports = reports.order_by("-date_time_reported")  # default
 
     # --- Dropdown values ---
-    # Get all distinct locations from resolved reports (ignoring location filter)
-    locations = EmergencyReport.objects.filter(status='resolved') \
-        .annotate(location_clean=Func('location', function='TRIM')) \
-        .values_list('location_clean', flat=True).distinct().order_by('location_clean')
-
     dates = reports.dates("date_time_reported", "day").distinct()
+    locations = reports.values_list("location", flat=True).distinct()
     crime_categories = EmergencyReport.CRIME_CATEGORIES
     statuses = EmergencyReport.STATUS_CHOICES
 
-
-    crime_categories = EmergencyReport.CRIME_CATEGORIES
-    statuses = EmergencyReport.STATUS_CHOICES
     context = {
         "reports": reports,
         "query": query,
@@ -353,7 +506,7 @@ def unclassified_reports(request):
     if query:
         reports = reports.filter(
             Q(location__icontains=query) |
-            Q(sender__full_name__icontains=query)|
+            Q(sender__icontains=query) |
             Q(message__icontains=query)
         )
 
@@ -367,11 +520,7 @@ def unclassified_reports(request):
 
     # Distinct values for dropdowns
     dates = EmergencyReport.objects.filter(status='unclassified').dates('date_time_reported', 'day').distinct()
-    locations = EmergencyReport.objects.filter(status='unclassified') \
-    .annotate(location_clean=Func('location', function='TRIM')) \
-    .values_list('location_clean', flat=True) \
-    .distinct() \
-    .order_by('location_clean')
+    locations = EmergencyReport.objects.filter(status='unclassified').values_list('location', flat=True).distinct()
 
     context = {
         'reports': reports,
@@ -432,6 +581,9 @@ def view_unclassified_reports(request, report_id):
     return render(request, "reports/view_unclassified.html", context)
 
 
+
+
+
 @login_required
 def rejected_reports(request):
     # Base queryset: rejected reports only
@@ -447,7 +599,7 @@ def rejected_reports(request):
         reports = reports.filter(
             Q(report_id__icontains=query) |
             Q(location__icontains=query) |
-            Q(sender__full_name__icontains=query)|
+            Q(sender__icontains=query) |
             Q(message__icontains=query)
         )
 
@@ -459,11 +611,7 @@ def rejected_reports(request):
 
     # --- Distinct values for dropdowns ---
     dates = EmergencyReport.objects.filter(status='rejected').dates('date_time_reported', 'day').distinct()
-    locations = EmergencyReport.objects.filter(status='rejected') \
-    .annotate(location_clean=Func('location', function='TRIM')) \
-    .values_list('location_clean', flat=True) \
-    .distinct() \
-    .order_by('location_clean')
+    locations = EmergencyReport.objects.filter(status='rejected').values_list('location', flat=True).distinct()
 
     context = {
         'reports': reports,
@@ -531,6 +679,8 @@ def edit_report(request, report_id):
         'days_remaining': days_remaining,  # pass explicitly to template
     }
     return render(request, 'reports/edit_report.html', context)
+
+
 
 
 

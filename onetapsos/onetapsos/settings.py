@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,11 +25,10 @@ SECRET_KEY = 'django-insecure-7z*4+ejh^@bwctz9)74*-r5+qv7nl96(f6luicoeeufc6j_)l4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','127.0.0.1', 'localhost', '.ngrok.io','django-admin-onetapsos.onrender.com']
+ALLOWED_HOSTS = ['*','127.0.0.1', 'localhost', '.ngrok.io']
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
-    "https://django-admin-onetapsos.onrender.com",
 ]
 
 
@@ -43,14 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    "django_apscheduler",
-    'onetapsos.apps.OnetapsosConfig',
     'users',
     'reports',
-    'rest_framework',
     'callers',
-    'notifications',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -61,8 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'onetapsos.urls'
@@ -77,7 +69,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'notifications.context_processors.notifications_context',
             ],
         },
     },
@@ -134,9 +125,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -147,17 +135,3 @@ AUTH_USER_MODEL = 'users.UserProfile'
 #for Officer Profile Picture
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'ERROR',
-    },
-}

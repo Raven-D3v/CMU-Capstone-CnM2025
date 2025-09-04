@@ -1,0 +1,216 @@
+<!-- _charts.html -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+    <!-- Crime Categories Distribution -->
+    <div class="bg-white p-6 rounded-2xl shadow-md">
+        <h3 class="text-lg font-semibold mb-4">Crime Categories Distribution</h3>
+        <canvas id="crimeCategoriesChart"></canvas>
+
+        <!-- Status Chart Below Line Graph -->
+        <div class="mt-6">
+            <h3 class="text-lg font-semibold mb-4">Status Overview</h3>
+            <canvas id="statusChart" ></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white p-6 rounded-2xl shadow-md">
+        <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+        <canvas id="recentActivityChart"></canvas>
+
+        <!-- Reports by Location (Top 5 Barangays) -->
+         <div class="mt-6">
+            <h3 class="text-lg font-semibold mb-4">Top 5 Barangays</h3>
+            <canvas id="reportsByLocationChart"></canvas>
+        </div>
+
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // --- Crime Categories Chart (Dynamic from DB) ---
+    const crimeCtx = document.getElementById('crimeCategoriesChart').getContext('2d');
+
+    // Create chart instance with empty data initially
+    let crimeChart = new Chart(crimeCtx, {
+        type: 'doughnut',
+        data: {
+            labels: [],   // Filled via AJAX
+            datasets: [{
+                data: [],  // Filled via AJAX
+                backgroundColor: [
+                    '#3b82f6', '#ef4444', '#f59e0b', '#10b981',
+                    '#8b5cf6', '#06b6d4', '#f43f5e'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    function refreshCrimeChart() {
+        console.log("Refreshing Crime Categories Chart...");
+        fetch("{% url 'crime_categories_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                crimeChart.data.labels = data.labels;
+                crimeChart.data.datasets[0].data = data.values;
+                crimeChart.update();
+            })
+            .catch(err => console.error("Error refreshing crime chart:", err));
+    }
+
+    // Initial load
+    refreshCrimeChart();
+
+    // Auto-refresh every 10 seconds
+    setInterval(refreshCrimeChart, 15000);
+
+
+    // --- Reports by Date Chart (Dynamic from DB) ---
+    const activityCtx = document.getElementById('recentActivityChart').getContext('2d');
+
+    // Initialize chart with empty data
+    let activityChart = new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Reports',
+                data: [],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Date Reported' } },
+                y: { title: { display: true, text: 'Number of Reports' }, beginAtZero: true }
+            }
+        }
+    });
+
+    function refreshActivityChart() {
+        fetch("{% url 'reports_by_date_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                activityChart.data.labels = data.labels;
+                activityChart.data.datasets[0].data = data.values;
+                activityChart.update();
+            })
+            .catch(err => console.error("Error refreshing activity chart:", err));
+    }
+
+    // Initial load
+    refreshActivityChart();
+
+    // Auto-refresh every 15 seconds
+    setInterval(refreshActivityChart, 15000);
+
+
+
+    /// --- Status Overview Doughnut Chart ---
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+
+    let statusChart = new Chart(statusCtx, {
+        type: 'doughnut', // changed from 'bar' to 'doughnut'
+        data: {
+            labels: [], // will be filled by AJAX
+            datasets: [{
+                label: 'Number of Reports',
+                data: [], // will be filled by AJAX
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',   // Reported
+                    'rgba(255, 206, 86, 0.6)',   // Unclassified
+                    'rgba(201, 203, 207, 0.6)',  // Rejected
+                    'rgba(75, 192, 192, 0.6)'    // Resolved
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }, // show legend below chart
+                title: { display: false }
+            }
+        }
+    });
+
+    function refreshStatusChart() {
+        console.log("Refreshing Status Doughnut Chart...");
+        fetch("{% url 'status_chart_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                statusChart.data.labels = data.labels;
+                statusChart.data.datasets[0].data = data.values;
+                statusChart.update();
+            })
+            .catch(err => console.error("Error refreshing status chart:", err));
+    }
+
+    // Initial load
+    refreshStatusChart();
+
+    // Auto-refresh every 15 seconds
+    setInterval(refreshStatusChart, 15000);
+
+
+
+    // --- Top 5 Barangay Bar Chart ---
+    const locationCtx = document.getElementById('reportsByLocationChart').getContext('2d');
+
+    let locationChart = new Chart(locationCtx, {
+        type: 'bar',
+        data: {
+            labels: [],  // will be filled via AJAX
+            datasets: [{
+                label: 'Number of Reports',
+                data: [],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false }, title: { display: false } },
+            scales: { y: { beginAtZero: true, precision: 0 } }
+        }
+    });
+
+    function refreshLocationChart() {
+        fetch("{% url 'reports_by_location_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                locationChart.data.labels = data.labels;
+                locationChart.data.datasets[0].data = data.values;
+                locationChart.update();
+            })
+            .catch(err => console.error("Error refreshing location chart:", err));
+    }
+
+    // Initial load
+    refreshLocationChart();
+
+    // Refresh every 15 seconds
+    setInterval(refreshLocationChart, 15000);
+    
+</script>

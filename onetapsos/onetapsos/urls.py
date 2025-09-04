@@ -23,9 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('reports/', include('reports.urls')),
-    path("notifications/", include("notifications.urls")),
-    path('api/', include('callers.urls')),  # API endpoints
-
+    path("dashboard/", include("dashboard.urls")),
 ]
 
 # Serve media files during development

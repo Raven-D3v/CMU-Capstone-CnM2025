@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+
 {% block title %}Unclassified Reports - OneTapSOS{% endblock %}
 
 {% block content %}
@@ -13,22 +13,85 @@
 
     <!-- Filters -->
     <div class="overflow-x-auto mb-6 filters">
-        {% include "reports/partials/report_filters.html" with action_url=request.path show_status=False show_crime_category=False %}
+                 <form method="get" action="{% url 'unclassified_reports' %}" class="flex flex-col sm:flex-row sm:flex-wrap items-center gap-4 w-full min-w-max">
+            <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q|default:'' }}"
+                   class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-64">
+            <select name="date_filter" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+                <option value="">Date</option>
+                {% for date in dates %}
+                    <option value="{{ date|date:'Y-m-d' }}" {% if request.GET.date_filter == date|date:'Y-m-d' %}selected{% endif %}>
+                        {{ date|date:"M. d, Y" }}
+                    </option>
+                {% endfor %}
+            </select>
+            <select name="location_filter" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+                <option value="">Location</option>
+                {% for loc in locations %}
+                    <option value="{{ loc }}" {% if request.GET.location_filter == loc %}selected{% endif %}>
+                        {{ loc }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="px-4 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow sm:w-auto">
+                Filter
+            </button>
+        </form>
     </div>
 
-      <!-- Desktop Table -->
-    <div class="hidden md:block overflow-x-auto">
-        <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
-            {% include "reports/partials/report_table_head.html" with show_unclassified=True %}
-            <tbody id="reportTableBody">
-                <!-- JS fills rows -->
+    <!-- Desktop Table -->
+    <div class="overflow-x-auto hidden md:block">
+        <table class="w-full border-collapse bg-white shadow-md rounded-lg">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Report ID</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Date & Time Reported</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Location</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Sender</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Message</th>
+                    <th class="p-3 border-b border-gray-300 text-left text-gray-800 font-semibold">Action</th>
+                </tr>
+            </thead>
+            <tbody id="unclassifiedTableBody">
+                {% for report in reports %}
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 border-b border-gray-300">{{ report.report_id }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.date_time_reported|date:"Y-m-d h:i A" }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.location }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.sender }}</td>
+                    <td class="p-3 border-b border-gray-300">{{ report.message|default:"--" }}</td>
+                    <td class="p-3 border-b border-gray-300 text-center">
+                        <a href="{% url 'view_unclassified' report.report_id %}">
+                            <button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="p-3 border-b border-gray-300 text-center">No unclassified reports found.</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <!-- Mobile Card View -->
-    <div id="reportCardBody" class="grid gap-4 md:hidden">
-        <!-- JS fills cards -->
+    <!-- Mobile Cards -->
+    <div class="md:hidden grid gap-4" id="unclassifiedCardBody">
+        {% for report in reports %}
+        <div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+            <p><strong>ID:</strong> {{ report.report_id }}</p>
+            <p><strong>Date:</strong> {{ report.date_time_reported|date:"Y-m-d h:i A" }}</p>
+            <p><strong>Location:</strong> {{ report.location }}</p>
+            <p><strong>Sender:</strong> {{ report.sender }}</p>
+            <p><strong>Message:</strong> {{ report.message|default:"--" }}</p>
+            <div class="mt-3">
+                <a href="{% url 'view_unclassified' report.report_id %}">
+                    <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-500">No unclassified reports found.</p>
+        {% endfor %}
     </div>
 
     <!-- Footer Buttons -->
@@ -40,20 +103,87 @@
 
 </div>
 
-
-
-<!-- Scripts -->
 <script>
-    // Set the report list URL and page context for JS
-    window.REPORT_LIST_URL = "{% url 'unclassified_reports_json' %}";
-    window.PAGE_CONTEXT = { show_unclassified: true };
+const tableBody = document.getElementById('unclassifiedTableBody');
+const cardBody = document.getElementById('unclassifiedCardBody');
+const viewUrlBase = "{% url 'view_unclassified' 'REPORT_ID' %}".replace('REPORT_ID', ''); // Base URL for VIEW buttons
 
-    // Base URL for unclassified VIEW buttons
-    window.UNCLASSIFIED_VIEW_BASE = "{% url 'view_unclassified' 'REPLACE_ID' %}"
-    .replace('REPLACE_ID', '')
-    .replace(/\/$/, '');
+function fetchUnclassifiedReports() {
+    const q = document.querySelector('input[name="q"]').value;
+    const date_filter = document.querySelector('select[name="date_filter"]').value;
+    const location_filter = document.querySelector('select[name="location_filter"]').value;
 
+    const url = `{% url 'unclassified_reports_json' %}?q=${encodeURIComponent(q)}&date_filter=${encodeURIComponent(date_filter)}&location_filter=${encodeURIComponent(location_filter)}`;
+
+    // Optional: show loading indicator
+    tableBody.innerHTML = '<tr><td colspan="6" class="p-3 border-b text-center">Loading...</td></tr>';
+    cardBody.innerHTML = '<p class="text-center text-gray-500">Loading...</p>';
+
+    fetch(url, { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+            cardBody.innerHTML = '';
+
+            if (!data.reports.length) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="p-3 border-b text-center">No unclassified reports found.</td></tr>';
+                cardBody.innerHTML = '<p class="text-center text-gray-500">No unclassified reports found.</p>';
+                return;
+            }
+
+            data.reports.forEach(r => {
+                // Desktop table row
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50';
+                tr.innerHTML = `
+                    <td class="p-3 border-b border-gray-300">${r.report_id}</td>
+                    <td class="p-3 border-b border-gray-300">${r.date_time_reported}</td>
+                    <td class="p-3 border-b border-gray-300">${r.location}</td>
+                    <td class="p-3 border-b border-gray-300">${r.sender}</td>
+                    <td class="p-3 border-b border-gray-300">${r.message || '--'}</td>
+                    <td class="p-3 border-b border-gray-300 text-center">
+                        <a href="${viewUrlBase}${r.report_id}/">
+                            <button class="px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                        </a>
+                    </td>`;
+                tableBody.appendChild(tr);
+
+                // Mobile card
+                const card = document.createElement('div');
+                card.className = 'bg-white shadow-md rounded-lg p-4 border border-gray-200';
+                card.innerHTML = `
+                    <p><strong>ID:</strong> ${r.report_id}</p>
+                    <p><strong>Date:</strong> ${r.date_time_reported}</p>
+                    <p><strong>Location:</strong> ${r.location}</p>
+                    <p><strong>Sender:</strong> ${r.sender}</p>
+                    <p><strong>Message:</strong> ${r.message || '--'}</p>
+                    <div class="mt-3">
+                        <a href="${viewUrlBase}${r.report_id}/">
+                            <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">VIEW</button>
+                        </a>
+                    </div>`;
+                cardBody.appendChild(card);
+            });
+        })
+        .catch(err => {
+            console.error('Error fetching unclassified reports:', err);
+            tableBody.innerHTML = '<tr><td colspan="6" class="p-3 border-b text-center text-red-500">Failed to load reports.</td></tr>';
+            cardBody.innerHTML = '<p class="text-center text-red-500">Failed to load reports.</p>';
+        });
+}
+
+// Auto-refresh every 5 seconds
+setInterval(fetchUnclassifiedReports, 5000);
+
+// Filter form submit
+document.querySelector('.filters form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetchUnclassifiedReports();
+});
+
+// Initial fetch
+fetchUnclassifiedReports();
 </script>
-<script src="{% static 'js/report_list.js' %}"></script>
+
 
 {% endblock %}

@@ -1,0 +1,32 @@
+<!-- _stats_cards.html -->
+<p class="text-gray-600 mt-2">Total Reports:
+<span id="total-reports">{{ total_reports }}</span></p> 
+
+<div id="stats-content" class="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
+
+    <!-- Active Reports -->
+    <div class="bg-white p-6 rounded-2xl shadow-md text-center">
+        <h3 class="text-lg font-semibold">Active Reports</h3>
+        <p id="active-reports" class="text-3xl font-bold text-red-600">{{ active_reports }}</p>
+    </div>
+
+    <!-- Resolved Reports -->
+    <div class="bg-white p-6 rounded-2xl shadow-md text-center">
+        <h3 class="text-lg font-semibold">Resolved Reports</h3>
+        <p id="resolved-reports" class="text-3xl font-bold text-red-600">{{ resolved_reports }}</p>
+    </div>
+
+    <!-- Unclassified Reports -->
+    <div class="bg-white p-6 rounded-2xl shadow-md text-center">
+        <h3 class="text-lg font-semibold">Unclassified Reports</h3>
+        <p id="unclassified-reports" class="text-3xl font-bold text-red-600">{{ unclassified_reports }}</p>
+    </div>
+
+    <!-- Rejected Reports -->
+    <div class="bg-white p-6 rounded-2xl shadow-md text-center">
+        <h3 class="text-lg font-semibold">Rejected Reports</h3>
+        <p id="rejected-reports" class="text-3xl font-bold text-red-600">{{ rejected_reports }}</p>
+    </div>
+
+</div>
+

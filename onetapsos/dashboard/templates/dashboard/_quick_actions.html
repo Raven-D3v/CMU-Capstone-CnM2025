@@ -1,0 +1,22 @@
+<!-- _quick_actions.html -->
+<div class="bg-white p-6 rounded-2xl shadow-md my-6">
+    <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <!-- View Reports -->
+        <a href="{% url 'report_list' %}" class="block bg-blue-600 text-white text-center py-4 rounded-xl shadow hover:bg-blue-700 transition">
+            📄 View Reports
+        </a>
+
+        <!-- Manage Officers -->
+        <a href="{% url 'officer_list' %}" class="block bg-green-600 text-white text-center py-4 rounded-xl shadow hover:bg-green-700 transition">
+            👮 Manage Officers
+        </a>
+
+        <!-- View Callers -->
+        <a href="{% url 'callers_list' %}" class="block bg-yellow-500 text-white text-center py-4 rounded-xl shadow hover:bg-yellow-600 transition">
+            📞 View Callers
+        </a>
+
+    </div>
+</div>
