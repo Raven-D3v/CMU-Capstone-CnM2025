@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Report View - OneTapSOS{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto p-6 space-y-6 text-center">
+
+  <!-- Report Summary -->
+  <div class="space-y-2">
+    <div class="text-lg"><strong>Report ID:</strong> {{ report.report_id }}</div>
+    <div class="text-lg"><strong>Date & Time Reported:</strong> {{ report.date_time_reported|date:"F d, Y h:i A" }}</div>
+    <div class="text-lg"><strong>Location:</strong> {{ report.location }}</div>
+    <div class="text-lg"><strong>Sender:</strong> {{ report.sender }}</div>
+  </div>
+
+  <!-- Message -->
+  <div class="p-4 bg-gray-100 rounded-lg whitespace-pre-wrap">
+    {{ report.message|default:"No message provided." }}
+  </div>
+
+  <!-- Crime Category & Status -->
+  <div class="space-y-2">
+    <div class="text-lg"><strong>Crime Category:</strong> {{ report.get_crime_category_display }}</div>
+    <div class="text-lg"><strong>Status:</strong> {{ report.get_status_display }}</div>
+  </div>
+
+  <!-- Response Info for Active/Resolved -->
+  {% if report.status == "active" or report.status == "resolved" %}
+  <div class="space-y-2">
+    <div class="text-lg"><strong>Date & Time Responded:</strong> 
+      {% if report.date_time_responded %}{{ report.date_time_responded|date:"F d, Y h:i A" }}{% else %}--{% endif %}
+    </div>
+
+    <div class="text-lg"><strong>Officers Responded:</strong> 
+      {% if officers_responded %}{{ officers_responded|join:", " }}{% else %}None{% endif %}
+    </div>
+
+    <div class="text-lg"><strong>Date & Time Resolved:</strong> 
+      {% if report.date_time_resolved %}{{ report.date_time_resolved|date:"F d, Y h:i A" }}{% else %}--{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Rejected Info -->
+  {% if report.status == "rejected" %}
+  <div class="space-y-2">
+    <div class="text-lg"><strong>Rejected Reason:</strong> {{ report.rejection_reason }}</div>
+    <div class="text-lg"><strong>Rejected On:</strong> {{ report.date_time_rejected|date:"Y-m-d h:i A" }}</div>
+    <div class="text-lg"><strong>Days Remaining:</strong> {{ report.days_remaining }} Days</div>
+  </div>
+  <div class="p-3 bg-red-100 text-red-800 font-semibold rounded-md">
+    ⚠️ This report has been rejected.
+  </div>
+  {% endif %}
+
+  <!-- Buttons -->
+  <div class="flex justify-center gap-4 mt-6">
+    {% if report.status == "active" or report.status == "rejected" or report.status == "resolved" %}
+      <a href="{% url 'edit_report' report.report_id %}" class="px-5 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition">EDIT</a>
+    {% endif %}
+
+    {% if report.status == "rejected" %}
+      <a href="{% url 'rejected_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Rejected Reports</a>
+    {% elif report.status == "resolved" %}
+      <a href="{% url 'archived_reports' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Archived Reports</a>
+    {% else %}
+      <a href="{% url 'report_list' %}" class="px-5 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">◀ Return to Active Reports</a>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,6 +1,0 @@
-<h2>Reports List</h2>
-<ul>
-    {% for report in reports %}
-        <li><a href="{% url 'report_view' report.id %}">{{ report }}</a></li>
-    {% endfor %}
-</ul>

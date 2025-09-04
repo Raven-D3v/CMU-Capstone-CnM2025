@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Officer View | OneTapSOS{% endblock %}
+
+{% block content %}
+<div class="p-6 space-y-6">
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-gray-800 text-glow">OFFICER’S PROFILE</h2>
+        <p class="text-gray-600"><strong>{% now "l, F j, Y - h:i A" %}</strong></p>
+    </div>
+
+    <!-- Officer Profile Card -->
+    <div class="p-6 bg-white rounded-lg shadow-md border border-gray-300 text-center">
+        <div class="flex justify-center">
+            {% if user.officer_photo %}
+                <img src="{{ user.officer_photo.url }}" alt="Officer Photo" class="w-32 h-32 object-cover border border-gray-300 rounded-md mb-4">
+            {% else %}
+                <img src="{% static 'img/avatar-placeholder.png' %}" alt="Officer Photo" class="w-32 h-32 object-cover border border-gray-300 rounded-md mb-4">
+            {% endif %}
+        </div>
+        <div class="officer-id text-lg font-medium text-gray-800 text-glow mb-2">{{ user.police_id }}</div>
+        <p class="text-gray-600 mb-1">{{ user.rank }}</p>
+        <p class="text-gray-600 mb-1">{{ user.get_full_name }}</p>
+        <p class="text-gray-600 mb-1">{{ user.designation }}</p>
+        <p class="text-gray-600">{{ user.area_vicinity }}</p>
+    </div>
+
+    <!-- Deployment History -->
+    <div class="text-lg font-semibold text-gray-800 text-glow mb-4">DEPLOYMENT HISTORY</div>
+
+    <!-- Desktop / Tablet Table -->
+    <div class="hidden sm:block overflow-x-auto">
+        <table class="w-full min-w-[900px] border-collapse bg-white shadow-md">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Report ID</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Date Reported</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Location</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Crime Category</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Sender</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Status</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Responded</th>
+                    <th class="p-3 border-b border-gray-300 text-left font-semibold">Resolved</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deployment in deployments %}
+                <tr>
+                    <td class="p-3 border-b">{{ deployment.report.report_id }}</td>
+                    <td class="p-3 border-b">{{ deployment.report.date_time_reported|date:"Y-m-d h:i A" }}</td>
+                    <td class="p-3 border-b">{{ deployment.report.location }}</td>
+                    <td class="p-3 border-b">{{ deployment.report.crime_category }}</td>
+                    <td class="p-3 border-b">{{ deployment.report.sender }}</td>
+                    <td class="p-3 border-b">{{ deployment.status }}</td>
+                    <td class="p-3 border-b">{{ deployment.date_time_responded|date:"Y-m-d h:i A"|default:"--" }}</td>
+                    <td class="p-3 border-b">{{ deployment.date_time_resolved|date:"Y-m-d h:i A"|default:"--" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="p-3 border-b text-center text-gray-500">No deployment history available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="space-y-4 sm:hidden">
+        {% for deployment in deployments %}
+        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+            <p class="text-sm text-gray-600"><strong>Report ID:</strong> {{ deployment.report.report_id }}</p>
+            <p class="text-sm text-gray-600"><strong>Date Reported:</strong> {{ deployment.report.date_time_reported|date:"Y-m-d h:i A" }}</p>
+            <p class="text-sm text-gray-600"><strong>Location:</strong> {{ deployment.report.location }}</p>
+            <p class="text-sm text-gray-600"><strong>Crime Category:</strong> {{ deployment.report.crime_category }}</p>
+            <p class="text-sm text-gray-600"><strong>Sender:</strong> {{ deployment.report.sender }}</p>
+            <p class="text-sm text-gray-600"><strong>Status:</strong> {{ deployment.status }}</p>
+            <p class="text-sm text-gray-600"><strong>Responded:</strong> {{ deployment.date_time_responded|date:"Y-m-d h:i A"|default:"--" }}</p>
+            <p class="text-sm text-gray-600"><strong>Resolved:</strong> {{ deployment.date_time_resolved|date:"Y-m-d h:i A"|default:"--" }}</p>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No deployment history available.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'officer_list' %}" class="mt-4 inline-block px-6 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow">&larr; Back to Officers List</a>
+</div>
+{% endblock %}

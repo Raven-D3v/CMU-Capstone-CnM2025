@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Unclassified Reports - OneTapSOS{% endblock %}
+
+{% block content %}
+<div class="p-6 space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-gray-800 text-glow">UNCLASSIFIED REPORTS</h2>
+        <p class="text-gray-600"><strong>{% now "F j, Y, g:i A" %}</strong></p>
+    </div>
+
+    <!-- Filters -->
+    <div class="overflow-x-auto mb-6 filters">
+        {% include "reports/partials/report_filters.html" with action_url=request.path show_status=False show_crime_category=False %}
+    </div>
+
+      <!-- Desktop Table -->
+    <div class="hidden md:block overflow-x-auto">
+        <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+            {% include "reports/partials/report_table_head.html" with show_unclassified=True %}
+            <tbody id="reportTableBody">
+                <!-- JS fills rows -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div id="reportCardBody" class="grid gap-4 md:hidden">
+        <!-- JS fills cards -->
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="{% url 'rejected_reports' %}" class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">Rejected Reports</a>
+        <a href="{% url 'report_list' %}" class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">Active Reports</a>
+        <a href="{% url 'archived_reports' %}" class="px-4 py-2 bg-[#B91C1C] text-white rounded hover:bg-[#991B1B] transition border-glow text-center">Resolved Reports</a>
+    </div>
+
+</div>
+
+
+
+<!-- Scripts -->
+<script>
+    // Set the report list URL and page context for JS
+    window.REPORT_LIST_URL = "{% url 'unclassified_reports_json' %}";
+    window.PAGE_CONTEXT = { show_unclassified: true };
+
+    // Base URL for unclassified VIEW buttons
+    window.UNCLASSIFIED_VIEW_BASE = "{% url 'view_unclassified' 'REPLACE_ID' %}"
+    .replace('REPLACE_ID', '')
+    .replace(/\/$/, '');
+
+</script>
+<script src="{% static 'js/report_list.js' %}"></script>
+
+{% endblock %}

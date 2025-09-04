@@ -1,0 +1,30 @@
+{% for report in reports %}
+<div class="bg-white shadow-md rounded-lg p-4 border">
+    <p><strong>ID:</strong> {{ report.report_id }}</p>
+    <p><strong>Date:</strong> {{ report.date_time_reported|date:"Y-m-d h:i A" }}</p>
+    <p><strong>Location:</strong> {{ report.location }}</p>
+    <p><strong>Sender:</strong> {{ report.sender }}</p>
+    <p><strong>Category:</strong> {{ report.get_crime_category_display }}</p>
+    <p><strong>Status:</strong> {{ report.get_status_display }}</p>
+    <p><strong>Responded:</strong> {{ report.date_time_responded|default:"--"|date:"Y-m-d h:i A" }}</p>
+    <p><strong>Officers:</strong>
+        {% for officer in report.officers_responded.all %}
+            {{ officer.get_full_name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            --
+        {% endfor %}
+    </p>
+    <p><strong>Resolved:</strong> {{ report.date_time_resolved|default:"--"|date:"Y-m-d h:i A" }}</p>
+
+    <div class="mt-3 flex space-x-2">
+        <a href="{% url 'report_view' report.report_id %}" class="flex-1">
+            <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280]">VIEW</button>
+        </a>
+        <a href="{% url 'edit_report' report.report_id %}" class="flex-1">
+            <button class="w-full px-2 py-1 bg-[#4B7289] text-white rounded hover:bg-[#6B7280]">EDIT</button>
+        </a>
+    </div>
+</div>
+{% empty %}
+<p class="text-center text-gray-500">No active reports found.</p>
+{% endfor %}

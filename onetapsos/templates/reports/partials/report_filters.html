@@ -1,0 +1,56 @@
+<form method="get" action="{{ action_url|default:'' }}"
+      class="filters flex flex-col sm:flex-row sm:flex-wrap items-center gap-4 w-full min-w-max">
+
+    <!-- Search -->
+    <input type="text" name="q" placeholder="Search..."
+           value="{{ request.GET.q|default:'' }}"
+           class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-64">
+
+    <!-- Date -->
+    <input type="date" id="date_filter" name="date_filter"
+           value="{{ request.GET.date_filter|default:'' }}"
+           class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+
+    <!-- Location -->
+    <select name="location_filter"
+            class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+        <option value="">All Locations</option>
+        {% for loc in locations %}
+            <option value="{{ loc }}" {% if request.GET.location_filter == loc %}selected{% endif %}>
+                {{ loc }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Crime Category (only if show_crime_category=True) -->
+    {% if show_crime_category and crime_categories %}
+    <select name="crime_category_filter"
+            class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-48">
+        <option value="">All Categories</option>
+        {% for value, label in crime_categories %}
+            <option value="{{ value }}" {% if request.GET.crime_category_filter == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+    {% endif %}
+
+    <!-- Status (only if show_status=True) -->
+    {% if show_status and statuses %}
+    <select name="status_filter"
+            class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4B7289] w-full sm:w-40">
+        <option value="">All Status</option>
+        {% for value, label in statuses %}
+            <option value="{{ value }}" {% if request.GET.status_filter == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+    {% endif %}
+
+    <!-- Submit -->
+    <button type="submit"
+            class="px-4 py-2 bg-[#4B7289] text-white rounded hover:bg-[#6B7280] transition border-glow sm:w-auto">
+        Filter
+    </button>
+</form>

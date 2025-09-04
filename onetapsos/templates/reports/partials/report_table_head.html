@@ -1,0 +1,36 @@
+<table class="w-full border-collapse bg-white shadow-md">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="p-3 border-b">Report ID</th>
+            <th class="p-3 border-b">Date & Time Reported</th>
+            <th class="p-3 border-b">Location</th>
+            <th class="p-3 border-b">Sender</th>
+
+            {% if not show_unclassified %}
+                <th class="p-3 border-b">Crime Category</th>
+                <th class="p-3 border-b">Status</th>
+            {% endif %}
+
+            {% if show_unclassified %}
+                <th class="p-3 border-b">Message</th>
+            {% endif %}
+
+            {% if show_resolved %}
+                <th class="p-3 border-b">Date & Time Responded</th>
+                <th class="p-3 border-b">Officers Responded</th>
+                <th class="p-3 border-b">Date & Time Resolved</th>
+            {% endif %}
+
+            {% if show_rejected %}
+                <th class="p-3 border-b">Rejected On</th>
+                <th class="p-3 border-b">Message</th>
+                <th class="p-3 border-b">Days Remaining</th>
+            {% endif %}
+
+            <th colspan="2" class="p-3 border-b">Actions</th>
+        </tr>
+    </thead>
+    <tbody id="reportTableBody">
+        <!-- JS fills rows -->
+    </tbody>
+</table>

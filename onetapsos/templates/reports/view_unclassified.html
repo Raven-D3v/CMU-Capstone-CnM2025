@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}View Report - OneTapSOS{% endblock %}
+
+{% block content %}
+<style>
+.report-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #e0e0e0;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.report-container h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.report-message-box {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    resize: none;
+}
+
+.crime-category-container {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+}
+
+.crime-category-container label {
+    display: block;
+    margin: 5px 0;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.footer-buttons form button {
+    background-color: black;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+</style>
+
+<div class="report-container">
+    <h3>REPORT MESSAGE</h3>
+    <textarea readonly class="report-message-box">{{ report.message|default:"No message provided." }}</textarea>
+
+    {% if report.status == 'unclassified' %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="crime-category-container">
+            <strong>Select Crime Category:</strong>
+            {% for value, label in crime_choices %}
+                <label>
+                    <input type="radio" name="crime_category" value="{{ value }}">
+
+                    {{ label }}
+                </label>
+            {% endfor %}
+        </div>
+
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+
+        <div class="footer-buttons">
+            <button type="submit" name="action" value="accept">ACCEPT</button>
+            <button type="submit" name="action" value="reject">REJECT</button>
+        </div>
+    </form>
+    {% else %}
+        <div class="footer-buttons">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="action" value="reject">REJECT</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
